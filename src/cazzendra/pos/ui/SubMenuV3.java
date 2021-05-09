@@ -589,7 +589,7 @@ public class SubMenuV3 extends javax.swing.JFrame {
 
         comboGrade.setFont(new java.awt.Font("Ubuntu Medium", 0, 36)); // NOI18N
         comboGrade.setForeground(new java.awt.Color(0, 0, 102));
-        comboGrade.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Grade 6", "Grade 7", "Grade 8", "Grade 9", "Grade 10", "Grade 11", "Grade 12", "Grade 13" }));
+        comboGrade.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nursary", "Grade 1", "Grade 2", "Grade 3", "Grade 4", "Grade 5", "Grade 6", "Grade 7", "Grade 8", "Grade 9", "Grade 10", "Grade 11", "Grade 12", "Grade 13" }));
         comboGrade.addPopupMenuListener(new javax.swing.event.PopupMenuListener() {
             public void popupMenuCanceled(javax.swing.event.PopupMenuEvent evt) {
             }

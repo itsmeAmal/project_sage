@@ -38,18 +38,6 @@ public class manageStudents extends javax.swing.JFrame {
         try {
             int nextId = new studentDaoImpl().getNextStudentId();
             txtRegNo.setText(Integer.toString(nextId));
-            try {
-                ResultSet rset = studentController
-                        .getAllStudents();
-                while (rset.next()) {
-                    String name = rset.getString("student_name");
-                    String id = rset.getString("student_id");
-                    QR.generateQRCode(Integer.toString(nextId), 128, 128, "C:\\Users\\personal\\Dropbox\\qr\\" + name + " " + id + " " + ".jpg");
-                }
-
-            } catch (Exception ex) {
-                Logger.getLogger(manageStudents.class.getName()).log(Level.SEVERE, null, ex);
-            }
         } catch (SQLException ex) {
             Logger.getLogger(manageStudents.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -364,7 +352,7 @@ public class manageStudents extends javax.swing.JFrame {
 
         comboGrade.setFont(new java.awt.Font("Ubuntu Medium", 0, 18)); // NOI18N
         comboGrade.setForeground(new java.awt.Color(0, 0, 102));
-        comboGrade.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Grade 6", "Grade 7", "Grade 8", "Grade 9", "Grade 10", "Grade 11", "Grade 12", "Grade 13" }));
+        comboGrade.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nursary", "Grade 1", "Grade 2", "Grade 3", "Grade 4", "Grade 5", "Grade 6", "Grade 7", "Grade 8", "Grade 9", "Grade 10", "Grade 11", "Grade 12", "Grade 13" }));
 
         jLabel17.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(0, 0, 102));
