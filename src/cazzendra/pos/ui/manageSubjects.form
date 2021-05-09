@@ -25,7 +25,7 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="PanelMain" min="-2" max="-2" attributes="0"/>
+          <Component id="PanelMain" alignment="0" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
@@ -48,18 +48,18 @@
               <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="PanelSub" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="1" attributes="0">
-                      <Component id="jScrollPane1" alignment="1" min="-2" pref="655" max="-2" attributes="0"/>
-                      <Group type="102" alignment="1" attributes="0">
+                  <EmptySpace pref="14" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Group type="102" attributes="0">
                           <Component id="jLabel22" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="txtSearchValue" min="-2" pref="250" max="-2" attributes="0"/>
-                          <EmptySpace pref="319" max="32767" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
                           <Component id="btnEdit" min="-2" pref="40" max="-2" attributes="0"/>
                       </Group>
+                      <Component id="jScrollPane1" min="-2" pref="655" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="14" max="32767" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -73,7 +73,7 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="btnEdit" alignment="0" min="-2" pref="40" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="txtSearchValue" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                                  <Component id="txtSearchValue" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                                   <Component id="jLabel22" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
@@ -146,30 +146,6 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="32767" attributes="0"/>
-                              <Component id="txtSubjectName" min="-2" pref="251" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace pref="1" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jLabel20" alignment="1" min="-2" pref="251" max="-2" attributes="0"/>
-                                  <Group type="102" alignment="1" attributes="0">
-                                      <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                      <Component id="comboSemester" min="-2" pref="251" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Component id="jLabel23" alignment="1" min="-2" pref="251" max="-2" attributes="0"/>
-                                  <Component id="btSave" alignment="1" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
-                      </Group>
-                      <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                  </Group>
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
@@ -183,6 +159,18 @@
                               <EmptySpace min="-2" pref="79" max="-2" attributes="0"/>
                               <Component id="jLabel21" min="-2" pref="122" max="-2" attributes="0"/>
                           </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="txtSubjectName" alignment="0" min="-2" pref="251" max="-2" attributes="0"/>
+                                  <Group type="103" alignment="0" groupAlignment="0" attributes="0">
+                                      <Component id="jLabel20" alignment="1" min="-2" pref="251" max="-2" attributes="0"/>
+                                      <Component id="comboSemester" alignment="1" min="-2" pref="251" max="-2" attributes="0"/>
+                                      <Component id="jLabel23" alignment="1" min="-2" pref="251" max="-2" attributes="0"/>
+                                      <Component id="btSave" alignment="1" min="-2" pref="120" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                          </Group>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
@@ -194,20 +182,14 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jLabel20" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtSubjectName" min="-2" pref="44" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="txtSubjectName" min="-2" pref="30" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="jLabel23" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="comboSemester" min="-2" pref="44" max="-2" attributes="0"/>
-                          <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
-                      </Group>
+                      <Component id="comboSemester" min="-2" pref="30" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="btSave" min="-2" pref="50" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="113" max="-2" attributes="0"/>
+                      <Component id="btSave" min="-2" pref="30" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="153" max="-2" attributes="0"/>
                       <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jLabel21" min="-2" max="-2" attributes="0"/>
@@ -247,21 +229,6 @@
                 </Property>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel2">
-              <Properties>
-                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Ubuntu" size="14" style="0"/>
-                </Property>
-                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
-                </Property>
-                <Property name="horizontalAlignment" type="int" value="0"/>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/com/ttms/lableIcons/Subject.png"/>
-                </Property>
-                <Property name="toolTipText" type="java.lang.String" value="Module Name"/>
-              </Properties>
-            </Component>
             <Component class="javax.swing.JButton" name="btSave">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -270,9 +237,7 @@
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
                 </Property>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/com/ttms/labelIcons2/saveIcon.png"/>
-                </Property>
+                <Property name="text" type="java.lang.String" value="SAVE"/>
                 <Property name="toolTipText" type="java.lang.String" value="Add new subject"/>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="null"/>
@@ -285,7 +250,7 @@
             <Component class="javax.swing.JLabel" name="jLabel20">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Ubuntu Medium" size="14" style="0"/>
+                  <Font name="Ubuntu Medium" size="14" style="1"/>
                 </Property>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="66" green="0" red="0" type="rgb"/>
@@ -335,7 +300,7 @@
             <Component class="javax.swing.JLabel" name="jLabel23">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Ubuntu Medium" size="14" style="0"/>
+                  <Font name="Ubuntu Medium" size="14" style="1"/>
                 </Property>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="66" green="0" red="0" type="rgb"/>
@@ -356,21 +321,6 @@
                   <Image iconType="3" name="/com/ttms/lableIcons/Module_Code.png"/>
                 </Property>
                 <Property name="toolTipText" type="java.lang.String" value="Module Code"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JLabel" name="jLabel7">
-              <Properties>
-                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Ubuntu" size="14" style="0"/>
-                </Property>
-                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
-                </Property>
-                <Property name="horizontalAlignment" type="int" value="0"/>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/com/ttms/lableIcons/Level.png"/>
-                </Property>
-                <Property name="toolTipText" type="java.lang.String" value="Course Level"/>
               </Properties>
             </Component>
           </SubComponents>

@@ -139,14 +139,12 @@ public class manageSubjects extends javax.swing.JFrame {
         PanelSub = new javax.swing.JPanel();
         txtSubjectName = new javax.swing.JTextField();
         txtModuleCode = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
         btSave = new javax.swing.JButton();
         jLabel20 = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
         comboSemester = new javax.swing.JComboBox<>();
         jLabel23 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
         btnEdit = new javax.swing.JButton();
         txtSearchValue = new javax.swing.JTextField();
         jLabel22 = new javax.swing.JLabel();
@@ -205,15 +203,9 @@ public class manageSubjects extends javax.swing.JFrame {
         txtModuleCode.setSelectedTextColor(new java.awt.Color(0, 0, 0));
         txtModuleCode.setSelectionColor(new java.awt.Color(255, 255, 0));
 
-        jLabel2.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/ttms/lableIcons/Subject.png"))); // NOI18N
-        jLabel2.setToolTipText("Module Name");
-
         btSave.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
         btSave.setForeground(new java.awt.Color(255, 255, 255));
-        btSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/ttms/labelIcons2/saveIcon.png"))); // NOI18N
+        btSave.setText("SAVE");
         btSave.setToolTipText("Add new subject");
         btSave.setBorder(null);
         btSave.addActionListener(new java.awt.event.ActionListener() {
@@ -222,7 +214,7 @@ public class manageSubjects extends javax.swing.JFrame {
             }
         });
 
-        jLabel20.setFont(new java.awt.Font("Ubuntu Medium", 0, 14)); // NOI18N
+        jLabel20.setFont(new java.awt.Font("Ubuntu Medium", 1, 14)); // NOI18N
         jLabel20.setForeground(new java.awt.Color(0, 0, 102));
         jLabel20.setText("Subject Name");
 
@@ -234,7 +226,7 @@ public class manageSubjects extends javax.swing.JFrame {
         comboSemester.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Grade 1 ", "Grade 2 ", "Grade 3", "Grade 4", "Grade 5", "Grade 6", "Grade 7", "Grade 8", "Grade 9", "Grade 10", "Grade 11", "Grade 12", "Grade 13" }));
         comboSemester.setToolTipText("Semester");
 
-        jLabel23.setFont(new java.awt.Font("Ubuntu Medium", 0, 14)); // NOI18N
+        jLabel23.setFont(new java.awt.Font("Ubuntu Medium", 1, 14)); // NOI18N
         jLabel23.setForeground(new java.awt.Color(0, 0, 102));
         jLabel23.setText("Grade");
 
@@ -244,34 +236,10 @@ public class manageSubjects extends javax.swing.JFrame {
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/ttms/lableIcons/Module_Code.png"))); // NOI18N
         jLabel5.setToolTipText("Module Code");
 
-        jLabel7.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/ttms/lableIcons/Level.png"))); // NOI18N
-        jLabel7.setToolTipText("Course Level");
-
         javax.swing.GroupLayout PanelSubLayout = new javax.swing.GroupLayout(PanelSub);
         PanelSub.setLayout(PanelSubLayout);
         PanelSubLayout.setHorizontalGroup(
             PanelSubLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PanelSubLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(PanelSubLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(PanelSubLayout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(txtSubjectName, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(PanelSubLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 1, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(PanelSubLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel20, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelSubLayout.createSequentialGroup()
-                                .addComponent(jLabel7)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(comboSemester, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel23, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btSave, javax.swing.GroupLayout.Alignment.TRAILING))))
-                .addGap(10, 10, 10))
             .addGroup(PanelSubLayout.createSequentialGroup()
                 .addGroup(PanelSubLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(PanelSubLayout.createSequentialGroup()
@@ -281,7 +249,16 @@ public class manageSubjects extends javax.swing.JFrame {
                             .addComponent(jLabel5)))
                     .addGroup(PanelSubLayout.createSequentialGroup()
                         .addGap(79, 79, 79)
-                        .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(PanelSubLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(PanelSubLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtSubjectName, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(PanelSubLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel20, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(comboSemester, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel23, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btSave, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         PanelSubLayout.setVerticalGroup(
@@ -290,18 +267,14 @@ public class manageSubjects extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel20)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(PanelSubLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(txtSubjectName, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addComponent(txtSubjectName, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel23)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(PanelSubLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(comboSemester, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7))
+                .addComponent(comboSemester, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(btSave, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(113, 113, 113)
+                .addComponent(btSave, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(153, 153, 153)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel21)
@@ -344,16 +317,16 @@ public class manageSubjects extends javax.swing.JFrame {
             .addGroup(PanelMainLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(PanelSub, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(PanelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 655, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
+                .addGroup(PanelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(PanelMainLayout.createSequentialGroup()
                         .addComponent(jLabel22)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtSearchValue, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 318, Short.MAX_VALUE)
-                        .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(13, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 655, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         PanelMainLayout.setVerticalGroup(
             PanelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -365,7 +338,7 @@ public class manageSubjects extends javax.swing.JFrame {
                         .addGroup(PanelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(PanelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(txtSearchValue, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtSearchValue, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jLabel22)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 580, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -377,7 +350,7 @@ public class manageSubjects extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(PanelMain, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(PanelMain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -448,13 +421,11 @@ public class manageSubjects extends javax.swing.JFrame {
     private javax.swing.JButton btSave;
     private javax.swing.JButton btnEdit;
     private javax.swing.JComboBox<String> comboSemester;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblSubjectDetails;
     private javax.swing.JTextField txtModuleCode;

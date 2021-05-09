@@ -97,14 +97,12 @@ public class editSubject extends javax.swing.JDialog {
         PanelMain = new javax.swing.JPanel();
         btSave2 = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
         comboSemester = new javax.swing.JComboBox<>();
         txtSubjectName = new javax.swing.JTextField();
         jLabel23 = new javax.swing.JLabel();
         txtModuleCode = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Edit Selected Subject");
@@ -114,7 +112,7 @@ public class editSubject extends javax.swing.JDialog {
 
         btSave2.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
         btSave2.setForeground(new java.awt.Color(255, 255, 255));
-        btSave2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/ttms/labelIcons2/saveIcon.png"))); // NOI18N
+        btSave2.setText("UPDATE");
         btSave2.setToolTipText("Update New Subject");
         btSave2.setBorder(null);
         btSave2.addActionListener(new java.awt.event.ActionListener() {
@@ -129,17 +127,11 @@ public class editSubject extends javax.swing.JDialog {
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/ttms/lableIcons/Module_Code.png"))); // NOI18N
         jLabel5.setToolTipText("Module Code");
 
-        jLabel3.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/ttms/labelIcons3/semester.png"))); // NOI18N
-        jLabel3.setToolTipText("Semester");
-
-        jLabel20.setFont(new java.awt.Font("Ubuntu Medium", 0, 14)); // NOI18N
+        jLabel20.setFont(new java.awt.Font("Ubuntu Medium", 1, 14)); // NOI18N
         jLabel20.setForeground(new java.awt.Color(0, 0, 102));
         jLabel20.setText("Subject Name");
 
-        jLabel21.setFont(new java.awt.Font("Ubuntu Medium", 0, 14)); // NOI18N
+        jLabel21.setFont(new java.awt.Font("Ubuntu Medium", 1, 14)); // NOI18N
         jLabel21.setForeground(new java.awt.Color(0, 0, 102));
         jLabel21.setText("Subject Code");
 
@@ -152,7 +144,7 @@ public class editSubject extends javax.swing.JDialog {
         txtSubjectName.setSelectedTextColor(new java.awt.Color(0, 0, 0));
         txtSubjectName.setSelectionColor(new java.awt.Color(255, 255, 0));
 
-        jLabel23.setFont(new java.awt.Font("Ubuntu Medium", 0, 14)); // NOI18N
+        jLabel23.setFont(new java.awt.Font("Ubuntu Medium", 1, 14)); // NOI18N
         jLabel23.setForeground(new java.awt.Color(0, 0, 102));
         jLabel23.setText("Grade");
 
@@ -161,12 +153,6 @@ public class editSubject extends javax.swing.JDialog {
         txtModuleCode.setSelectedTextColor(new java.awt.Color(0, 0, 0));
         txtModuleCode.setSelectionColor(new java.awt.Color(255, 255, 0));
 
-        jLabel2.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/ttms/lableIcons/Subject.png"))); // NOI18N
-        jLabel2.setToolTipText("Module Name");
-
         javax.swing.GroupLayout PanelMainLayout = new javax.swing.GroupLayout(PanelMain);
         PanelMain.setLayout(PanelMainLayout);
         PanelMainLayout.setHorizontalGroup(
@@ -174,54 +160,39 @@ public class editSubject extends javax.swing.JDialog {
             .addGroup(PanelMainLayout.createSequentialGroup()
                 .addGroup(PanelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(PanelMainLayout.createSequentialGroup()
-                        .addGap(7, 7, 7)
-                        .addComponent(jLabel2)
-                        .addGap(12, 12, 12)
-                        .addGroup(PanelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtSubjectName, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(PanelMainLayout.createSequentialGroup()
-                                .addGap(1, 1, 1)
-                                .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(PanelMainLayout.createSequentialGroup()
                         .addGap(70, 70, 70)
                         .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(PanelMainLayout.createSequentialGroup()
                         .addGap(10, 10, 10)
                         .addComponent(jLabel5)
                         .addGap(16, 16, 16)
-                        .addComponent(txtModuleCode, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtModuleCode, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(PanelMainLayout.createSequentialGroup()
-                        .addGap(10, 10, 10)
+                        .addGap(23, 23, 23)
                         .addGroup(PanelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(btSave2)
-                            .addGroup(PanelMainLayout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(PanelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(PanelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtSubjectName, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(PanelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(btSave2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(comboSemester, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         PanelMainLayout.setVerticalGroup(
             PanelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelMainLayout.createSequentialGroup()
-                .addGap(7, 7, 7)
-                .addGroup(PanelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel20)
-                    .addGroup(PanelMainLayout.createSequentialGroup()
-                        .addGap(17, 17, 17)
-                        .addGroup(PanelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(txtSubjectName, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(22, 22, 22)
+                .addComponent(jLabel20)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtSubjectName, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel23)
                 .addGap(2, 2, 2)
-                .addGroup(PanelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
-                    .addComponent(comboSemester, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(btSave2)
-                .addGap(127, 127, 127)
+                .addComponent(comboSemester, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26)
+                .addComponent(btSave2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(89, 89, 89)
                 .addComponent(jLabel21)
                 .addGap(1, 1, 1)
                 .addGroup(PanelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -229,13 +200,15 @@ public class editSubject extends javax.swing.JDialog {
                     .addComponent(txtModuleCode, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
-        PanelSub.add(PanelMain, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 6, 327, 516));
+        PanelSub.add(PanelMain, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 6, 310, 516));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(PanelSub, javax.swing.GroupLayout.DEFAULT_SIZE, 341, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(PanelSub, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -304,11 +277,9 @@ public class editSubject extends javax.swing.JDialog {
     private javax.swing.JPanel PanelSub;
     private javax.swing.JButton btSave2;
     private javax.swing.JComboBox<String> comboSemester;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel23;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JTextField txtModuleCode;
     private javax.swing.JTextField txtSubjectName;
