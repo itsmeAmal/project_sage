@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="lecturers_all" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.1000000000000008"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="student_id" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[select * from lecturer]]>
+	</queryString>
+	<field name="lecturer_id" class="java.lang.Long"/>
+	<field name="lecturer_title" class="java.lang.String"/>
+	<field name="lecturer_name" class="java.lang.String"/>
+	<field name="lecturer_email" class="java.lang.String"/>
+	<field name="lecturer_contact_no" class="java.lang.String"/>
+	<field name="lecturer_detail" class="java.lang.String"/>
+	<field name="lecturer_status" class="java.lang.Boolean"/>
+	<field name="lecturer_address" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="64" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="24"/>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="15" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Lecturers - All]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="44" width="205" height="20"/>
+				<textElement textAlignment="Left">
+					<font fontName="SansSerif" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="205" y="44" width="106" height="20"/>
+				<textElement textAlignment="Left">
+					<font fontName="SansSerif" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Email]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="311" y="44" width="90" height="20"/>
+				<textElement textAlignment="Left">
+					<font fontName="SansSerif" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Contact]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="401" y="44" width="154" height="20"/>
+				<textElement textAlignment="Left">
+					<font fontName="SansSerif" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Subject]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="18" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="205" height="16"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{lecturer_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="205" y="0" width="106" height="16"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{lecturer_email}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="311" y="0" width="90" height="16"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{lecturer_contact_no}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="401" y="0" width="154" height="16"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{lecturer_detail}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
