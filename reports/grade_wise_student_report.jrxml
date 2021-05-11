@@ -4,8 +4,9 @@
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="student_id" class="java.lang.Integer"/>
+	<parameter name="grade" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[select * from student]]>
+		<![CDATA[select * from student where student_grade=$P{grade}]]>
 	</queryString>
 	<field name="student_id" class="java.lang.Long"/>
 	<field name="student_name" class="java.lang.String"/>
@@ -33,13 +34,6 @@
 	</background>
 	<title>
 		<band height="72" splitType="Stretch">
-			<staticText>
-				<reportElement x="0" y="9" width="802" height="24"/>
-				<textElement textAlignment="Center">
-					<font fontName="SansSerif" size="15" isBold="true"/>
-				</textElement>
-				<text><![CDATA[All Student Report]]></text>
-			</staticText>
 			<staticText>
 				<reportElement x="7" y="52" width="54" height="20"/>
 				<textElement textAlignment="Left">
@@ -103,6 +97,20 @@
 				</textElement>
 				<text><![CDATA[Grade]]></text>
 			</staticText>
+			<staticText>
+				<reportElement x="431" y="17" width="154" height="24"/>
+				<textElement textAlignment="Left">
+					<font fontName="SansSerif" size="15" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Student Report]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="341" y="17" width="90" height="24"/>
+				<textElement>
+					<font size="15" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{grade}]]></textFieldExpression>
+			</textField>
 		</band>
 	</title>
 	<pageHeader>

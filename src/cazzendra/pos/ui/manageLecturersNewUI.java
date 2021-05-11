@@ -146,7 +146,10 @@ public class manageLecturersNewUI extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Lecturer Management");
-        setMaximumSize(new java.awt.Dimension(1340, 642));
+        setMaximumSize(new java.awt.Dimension(1290, 651));
+        setMinimumSize(new java.awt.Dimension(1290, 651));
+
+        PanelMain.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         tblLectures.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
         tblLectures.getTableHeader().setFont(new Font("Ubuntu", Font.BOLD, 18));
@@ -188,6 +191,8 @@ public class manageLecturersNewUI extends javax.swing.JFrame {
             tblLectures.getColumnModel().getColumn(4).setMaxWidth(200);
         }
 
+        PanelMain.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 75, 973, 550));
+
         btnEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/ttms/labelIcons2/editIcon.png"))); // NOI18N
         btnEdit.setToolTipText("Edit Lecturer Details");
         btnEdit.addActionListener(new java.awt.event.ActionListener() {
@@ -195,6 +200,7 @@ public class manageLecturersNewUI extends javax.swing.JFrame {
                 btnEditActionPerformed(evt);
             }
         });
+        PanelMain.add(btnEdit, new org.netbeans.lib.awtextra.AbsoluteConstraints(943, 17, 40, 40));
 
         txtSearchLecturer.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
         txtSearchLecturer.setToolTipText("Search by Name");
@@ -205,10 +211,12 @@ public class manageLecturersNewUI extends javax.swing.JFrame {
                 txtSearchLecturerKeyReleased(evt);
             }
         });
+        PanelMain.add(txtSearchLecturer, new org.netbeans.lib.awtextra.AbsoluteConstraints(149, 17, 321, -1));
 
         jLabel21.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel21.setForeground(new java.awt.Color(0, 0, 102));
         jLabel21.setText("Search Lecturer");
+        PanelMain.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(18, 24, 121, -1));
 
         btViewStudentDetails.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/ttms/labelIcons2/viewButton.png"))); // NOI18N
         btViewStudentDetails.setToolTipText("Report");
@@ -217,54 +225,27 @@ public class manageLecturersNewUI extends javax.swing.JFrame {
                 btViewStudentDetailsActionPerformed(evt);
             }
         });
+        PanelMain.add(btViewStudentDetails, new org.netbeans.lib.awtextra.AbsoluteConstraints(893, 17, 40, 40));
 
-        javax.swing.GroupLayout PanelMainLayout = new javax.swing.GroupLayout(PanelMain);
-        PanelMain.setLayout(PanelMainLayout);
-        PanelMainLayout.setHorizontalGroup(
-            PanelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PanelMainLayout.createSequentialGroup()
-                .addGap(310, 310, 310)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 973, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(PanelMainLayout.createSequentialGroup()
-                .addGap(312, 312, 312)
-                .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txtSearchLecturer, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 422, Short.MAX_VALUE)
-                .addComponent(btViewStudentDetails, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(23, 23, 23))
-        );
-        PanelMainLayout.setVerticalGroup(
-            PanelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PanelMainLayout.createSequentialGroup()
-                .addGap(17, 17, 17)
-                .addGroup(PanelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(PanelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(txtSearchLecturer, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel21))
-                    .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btViewStudentDetails, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 558, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(60, 60, 60))
-        );
+        PanelSub.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         txtName.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
         txtName.setToolTipText("Lecturer Name");
         txtName.setSelectedTextColor(new java.awt.Color(0, 0, 0));
         txtName.setSelectionColor(new java.awt.Color(255, 255, 0));
+        PanelSub.add(txtName, new org.netbeans.lib.awtextra.AbsoluteConstraints(19, 50, 251, -1));
 
         txtEmail1.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
         txtEmail1.setToolTipText("Email ");
         txtEmail1.setSelectedTextColor(new java.awt.Color(0, 0, 0));
         txtEmail1.setSelectionColor(new java.awt.Color(255, 255, 0));
+        PanelSub.add(txtEmail1, new org.netbeans.lib.awtextra.AbsoluteConstraints(19, 111, 251, -1));
 
         txtContactNo.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
         txtContactNo.setToolTipText("Contact No");
         txtContactNo.setSelectedTextColor(new java.awt.Color(0, 0, 0));
         txtContactNo.setSelectionColor(new java.awt.Color(255, 255, 0));
+        PanelSub.add(txtContactNo, new org.netbeans.lib.awtextra.AbsoluteConstraints(19, 172, 251, -1));
 
         btSave.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
         btSave.setForeground(new java.awt.Color(255, 255, 255));
@@ -276,94 +257,45 @@ public class manageLecturersNewUI extends javax.swing.JFrame {
                 btSaveActionPerformed(evt);
             }
         });
+        PanelSub.add(btSave, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 309, 120, 30));
 
         jLabel20.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel20.setForeground(new java.awt.Color(0, 0, 102));
         jLabel20.setText("Lecturer Name");
+        PanelSub.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(19, 20, 151, -1));
 
         Email.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         Email.setForeground(new java.awt.Color(0, 0, 102));
         Email.setText("Email");
+        PanelSub.add(Email, new org.netbeans.lib.awtextra.AbsoluteConstraints(19, 86, 251, -1));
 
         jLabel22.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel22.setForeground(new java.awt.Color(0, 0, 102));
         jLabel22.setText("Contact No");
+        PanelSub.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(19, 147, 251, -1));
 
         jLabel23.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel23.setForeground(new java.awt.Color(0, 0, 102));
         jLabel23.setText("Subject");
+        PanelSub.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(19, 213, 251, -1));
 
         comboSubjects.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
         comboSubjects.setToolTipText("Type");
-
-        javax.swing.GroupLayout PanelSubLayout = new javax.swing.GroupLayout(PanelSub);
-        PanelSub.setLayout(PanelSubLayout);
-        PanelSubLayout.setHorizontalGroup(
-            PanelSubLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PanelSubLayout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addGroup(PanelSubLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btSave, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(PanelSubLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(Email, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txtEmail1, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txtContactNo, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(comboSubjects, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(22, Short.MAX_VALUE))
-        );
-        PanelSubLayout.setVerticalGroup(
-            PanelSubLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PanelSubLayout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(jLabel20)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(Email)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtEmail1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel22)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtContactNo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel23)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(comboSubjects, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(36, 36, 36)
-                .addComponent(btSave, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(246, Short.MAX_VALUE))
-        );
+        PanelSub.add(comboSubjects, new org.netbeans.lib.awtextra.AbsoluteConstraints(19, 243, 251, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(PanelSub, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(1038, Short.MAX_VALUE))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(PanelMain, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+                .addComponent(PanelSub, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(PanelMain, javax.swing.GroupLayout.PREFERRED_SIZE, 1007, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(PanelSub, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(46, Short.MAX_VALUE))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(PanelMain, javax.swing.GroupLayout.PREFERRED_SIZE, 640, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+            .addComponent(PanelSub, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(PanelMain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();

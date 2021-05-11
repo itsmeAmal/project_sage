@@ -46,6 +46,7 @@ public class studentDaoImpl implements studentDao {
         ps.setInt(11, getNextStudentId());
         ps.setDate(12, student.getDob());
         ps.setString(13, student.getGuardianName());
+        ps.setString(14, student.getGrade());
         ps.executeUpdate();
         ps.close();
         return true;
