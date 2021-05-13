@@ -2,8 +2,5 @@
 /.class
 .class
 *.class
-
-*.jar
-/dist/
 /nbproject/private/
 /build/
