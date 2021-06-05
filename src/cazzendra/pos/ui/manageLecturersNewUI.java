@@ -191,7 +191,7 @@ public class manageLecturersNewUI extends javax.swing.JFrame {
             tblLectures.getColumnModel().getColumn(4).setMaxWidth(200);
         }
 
-        PanelMain.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 75, 973, 550));
+        PanelMain.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 75, 973, 530));
 
         btnEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/ttms/labelIcons2/editIcon.png"))); // NOI18N
         btnEdit.setToolTipText("Edit Lecturer Details");
@@ -249,7 +249,7 @@ public class manageLecturersNewUI extends javax.swing.JFrame {
 
         btSave.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
         btSave.setForeground(new java.awt.Color(255, 255, 255));
-        btSave.setText("SAVE");
+        btSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cazzendra/pos/ui/icons/save.png"))); // NOI18N
         btSave.setToolTipText("Add new lecturer");
         btSave.setBorder(null);
         btSave.addActionListener(new java.awt.event.ActionListener() {
@@ -257,7 +257,7 @@ public class manageLecturersNewUI extends javax.swing.JFrame {
                 btSaveActionPerformed(evt);
             }
         });
-        PanelSub.add(btSave, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 309, 120, 30));
+        PanelSub.add(btSave, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 309, 120, -1));
 
         jLabel20.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel20.setForeground(new java.awt.Color(0, 0, 102));

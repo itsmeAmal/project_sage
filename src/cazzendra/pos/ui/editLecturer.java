@@ -119,7 +119,7 @@ public class editLecturer extends javax.swing.JDialog {
 
         btSave2.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
         btSave2.setForeground(new java.awt.Color(255, 255, 255));
-        btSave2.setText("UPDATE");
+        btSave2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cazzendra/pos/ui/icons/save.png"))); // NOI18N
         btSave2.setToolTipText("Update New Lecturer");
         btSave2.setBorder(null);
         btSave2.addActionListener(new java.awt.event.ActionListener() {
@@ -201,8 +201,8 @@ public class editLecturer extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(comboSubjects, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(btSave2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(240, Short.MAX_VALUE))
+                .addComponent(btSave2)
+                .addContainerGap(221, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout PanelMainLayout = new javax.swing.GroupLayout(PanelMain);
