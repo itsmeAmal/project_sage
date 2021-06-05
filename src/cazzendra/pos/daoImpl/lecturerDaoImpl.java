@@ -20,19 +20,22 @@ import java.util.ArrayList;
  */
 public class lecturerDaoImpl implements lecturerDao {
 
-    private String selectQuery = "select lecturer_id, lecturer_title, lecturer_name, lecturer_email, lecturer_contact_no, lecturer_detail, lecturer_status from lecturer";
+    private String selectQuery = "select lecturer_id, lecturer_title, lecturer_name, lecturer_email,"
+            + " lecturer_contact_no, lecturer_detail, lecturer_status, lecturer_prefix_code from lecturer";
 
     @Override
     public boolean addLecturer(lecturer lecturer) throws SQLException {
         Connection con = DatabaseConnection.getDatabaseConnection();
-        PreparedStatement ps = con.prepareStatement("insert into lecturer(lecturer_title, lecturer_name, lecturer_email, lecturer_contact_no, "
-                + " lecturer_detail, lecturer_status) values (?,?,?,?,?,?)");
+        PreparedStatement ps = con.prepareStatement("insert into lecturer(lecturer_title, lecturer_name, "
+                + " lecturer_email, lecturer_contact_no, lecturer_detail, lecturer_status, lecturer_prefix_code) "
+                + " values (?,?,?,?,?,?,?)");
         ps.setString(1, lecturer.getTitle());
         ps.setString(2, lecturer.getName());
         ps.setString(3, lecturer.getEmail());
         ps.setString(4, lecturer.getContactNo());
         ps.setString(5, lecturer.getDetail());
         ps.setInt(6, lecturer.getStatus());
+        ps.setString(7, lecturer.getPrefixCode());
         ps.executeUpdate();
         ps.close();
         return true;
@@ -52,14 +55,15 @@ public class lecturerDaoImpl implements lecturerDao {
     public boolean updateLecturer(lecturer lecturer) throws SQLException {
         Connection con = DatabaseConnection.getDatabaseConnection();
         PreparedStatement ps = con.prepareStatement("update lecturer set lecturer_title=?, lecturer_name=?, lecturer_email=?, lecturer_contact_no=?,"
-                + " lecturer_detail=?, lecturer_status=? where lecturer_id=?");
+                + " lecturer_detail=?, lecturer_status=?, lecturer_prefix_code=? where lecturer_id=?");
         ps.setString(1, lecturer.getTitle());
         ps.setString(2, lecturer.getName());
         ps.setString(3, lecturer.getEmail());
         ps.setString(4, lecturer.getContactNo());
         ps.setString(5, lecturer.getDetail());
         ps.setInt(6, lecturer.getStatus());
-        ps.setInt(7, lecturer.getId());
+        ps.setString(7, lecturer.getPrefixCode());
+        ps.setInt(8, lecturer.getId());
         ps.executeUpdate();
         ps.close();
         return true;

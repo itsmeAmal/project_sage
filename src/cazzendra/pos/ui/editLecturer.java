@@ -73,6 +73,7 @@ public class editLecturer extends javax.swing.JDialog {
             lecturer.setStatus(lecturer.ACTIVE);
             lecturer.setTitle("");
             lecturer.setDetail(comboSubjects.getSelectedItem().toString());
+            lecturer.setPrefixCode(txtPrefixCode.getText().trim());
 
             boolean status = lecturerController.updateLecturer(lecturer);
             if (status) {
@@ -113,6 +114,8 @@ public class editLecturer extends javax.swing.JDialog {
         Email = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
         jLabel23 = new javax.swing.JLabel();
+        jLabel24 = new javax.swing.JLabel();
+        txtPrefixCode = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Edit Lecturer");
@@ -162,6 +165,10 @@ public class editLecturer extends javax.swing.JDialog {
         jLabel23.setForeground(new java.awt.Color(0, 0, 102));
         jLabel23.setText("Subject");
 
+        jLabel24.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel24.setForeground(new java.awt.Color(0, 0, 102));
+        jLabel24.setText("Lecturer Prefix Code");
+
         javax.swing.GroupLayout PanelSubLayout = new javax.swing.GroupLayout(PanelSub);
         PanelSub.setLayout(PanelSubLayout);
         PanelSubLayout.setHorizontalGroup(
@@ -169,6 +176,9 @@ public class editLecturer extends javax.swing.JDialog {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelSubLayout.createSequentialGroup()
                 .addContainerGap(41, Short.MAX_VALUE)
                 .addGroup(PanelSubLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(PanelSubLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtPrefixCode, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(btSave2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(PanelSubLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -201,8 +211,12 @@ public class editLecturer extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(comboSubjects, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
+                .addComponent(jLabel24)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txtPrefixCode, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(23, 23, 23)
                 .addComponent(btSave2)
-                .addContainerGap(221, Short.MAX_VALUE))
+                .addContainerGap(138, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout PanelMainLayout = new javax.swing.GroupLayout(PanelMain);
@@ -295,8 +309,10 @@ public class editLecturer extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
     private javax.swing.JTextField txtContactNo;
     private javax.swing.JTextField txtEmail1;
     private javax.swing.JTextField txtName;
+    private javax.swing.JTextField txtPrefixCode;
     // End of variables declaration//GEN-END:variables
 }

@@ -17,7 +17,8 @@ import java.util.ArrayList;
  */
 public class lecturerController {
 
-    public static boolean addLecturer(String title, String name, String email, String contactNo, String detail) throws SQLException {
+    public static boolean addLecturer(String title, String name, String email, String contactNo,
+            String detail, String prefixCode) throws SQLException {
         lecturer lecturer = new lecturer();
         lecturer.setName(name);
         lecturer.setDetail(detail);
@@ -25,6 +26,7 @@ public class lecturerController {
         lecturer.setEmail(email);
         lecturer.setStatus(lecturer.ACTIVE);
         lecturer.setTitle(title);
+        lecturer.setPrefixCode(prefixCode);
         return new lecturerDaoImpl().addLecturer(lecturer);
     }
 
@@ -54,6 +56,7 @@ public class lecturerController {
             lecturer.setEmail(rset.getString("lecturer_email"));
             lecturer.setContactNo(rset.getString("lecturer_contact_no"));
             lecturer.setStatus(rset.getInt("lecturer_status"));
+            lecturer.setPrefixCode(rset.getString("lecturer_prefix_code"));
         }
         return lecturer;
     }

@@ -21,6 +21,7 @@ public class lecturer {
     private String contactNo;
     private String detail;
     private int status;
+    private String prefixCode;
 
     /**
      * @return the id
@@ -118,6 +119,20 @@ public class lecturer {
      */
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    /**
+     * @return the prefixCode
+     */
+    public String getPrefixCode() {
+        return prefixCode;
+    }
+
+    /**
+     * @param prefixCode the prefixCode to set
+     */
+    public void setPrefixCode(String prefixCode) {
+        this.prefixCode = prefixCode;
     }
 
 }

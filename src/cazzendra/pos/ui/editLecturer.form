@@ -65,6 +65,10 @@
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace pref="41" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="1" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="jLabel24" alignment="0" min="-2" pref="251" max="-2" attributes="0"/>
+                              <Component id="txtPrefixCode" alignment="0" min="-2" pref="251" max="-2" attributes="0"/>
+                          </Group>
                           <Component id="btSave2" min="-2" pref="120" max="-2" attributes="0"/>
                           <Component id="jLabel23" alignment="1" min="-2" pref="251" max="-2" attributes="0"/>
                           <Group type="103" alignment="1" groupAlignment="0" attributes="0">
@@ -101,8 +105,12 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="comboSubjects" min="-2" pref="30" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="jLabel24" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="txtPrefixCode" min="-2" pref="30" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
                       <Component id="btSave2" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="221" max="32767" attributes="0"/>
+                      <EmptySpace pref="138" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -224,6 +232,19 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Subject"/>
               </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="jLabel24">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Dialog" size="14" style="1"/>
+                </Property>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="66" green="0" red="0" type="rgb"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Lecturer Prefix Code"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JTextField" name="txtPrefixCode">
             </Component>
           </SubComponents>
         </Container>
