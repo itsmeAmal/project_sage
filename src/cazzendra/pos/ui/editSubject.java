@@ -57,10 +57,10 @@ public class editSubject extends javax.swing.JDialog {
                 return;
             }
 
-            if (txtModuleCode.getText().trim().equalsIgnoreCase(null) || txtModuleCode.getText().trim().equalsIgnoreCase("")) {
-                JOptionPane.showMessageDialog(this, "Please enter module code !", "Error", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
+//            if (txtModuleCode.getText().trim().equalsIgnoreCase(null) || txtModuleCode.getText().trim().equalsIgnoreCase("")) {
+//                JOptionPane.showMessageDialog(this, "Please enter module code !", "Error", JOptionPane.ERROR_MESSAGE);
+//                return;
+//            }
 
             subject subject = new subject();
             subject.setCourseId(0);
@@ -112,7 +112,7 @@ public class editSubject extends javax.swing.JDialog {
 
         btSave2.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
         btSave2.setForeground(new java.awt.Color(255, 255, 255));
-        btSave2.setText("UPDATE");
+        btSave2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cazzendra/pos/ui/icons/save.png"))); // NOI18N
         btSave2.setToolTipText("Update New Subject");
         btSave2.setBorder(null);
         btSave2.addActionListener(new java.awt.event.ActionListener() {
@@ -191,8 +191,8 @@ public class editSubject extends javax.swing.JDialog {
                 .addGap(2, 2, 2)
                 .addComponent(comboSemester, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(26, 26, 26)
-                .addComponent(btSave2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(89, 89, 89)
+                .addComponent(btSave2)
+                .addGap(70, 70, 70)
                 .addComponent(jLabel21)
                 .addGap(1, 1, 1)
                 .addGroup(PanelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -200,15 +200,13 @@ public class editSubject extends javax.swing.JDialog {
                     .addComponent(txtModuleCode, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
-        PanelSub.add(PanelMain, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 6, 310, 516));
+        PanelSub.add(PanelMain, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 6, 300, 516));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(PanelSub, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(PanelSub, javax.swing.GroupLayout.DEFAULT_SIZE, 314, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
