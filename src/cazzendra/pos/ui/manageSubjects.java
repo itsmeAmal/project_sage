@@ -361,23 +361,23 @@ public class manageSubjects extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSaveActionPerformed
-        addSubject();
-        loadSubjectsToTable();
-    }//GEN-LAST:event_btSaveActionPerformed
-
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
         editSelectedCourse();
         loadSubjectsToTable();
     }//GEN-LAST:event_btnEditActionPerformed
 
-    private void txtSearchValueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSearchValueActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtSearchValueActionPerformed
+    private void btSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSaveActionPerformed
+        addSubject();
+        loadSubjectsToTable();
+    }//GEN-LAST:event_btSaveActionPerformed
 
     private void txtSearchValueKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchValueKeyReleased
         searchSubjectByNameAndGrade();
     }//GEN-LAST:event_txtSearchValueKeyReleased
+
+    private void txtSearchValueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSearchValueActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtSearchValueActionPerformed
 
     /**
      * @param args the command line arguments
