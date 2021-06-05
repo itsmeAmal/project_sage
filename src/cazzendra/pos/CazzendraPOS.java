@@ -47,6 +47,7 @@ public class CazzendraPOS {
             Loading.setColorG(0);
             Loading.setColorB(102);
             Loading.setDbPassword("1234");
+            Loading.setCopyrightStatement("© Cloud Revel Technologies 2021 |  www.cloudrevel.info"); 
 
 
             //Deployment Options
