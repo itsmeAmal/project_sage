@@ -80,6 +80,7 @@ public class Login extends javax.swing.JFrame {
         lblTimeMonth = new javax.swing.JLabel();
         lblCopyrightStatement = new javax.swing.JLabel();
         comboLanguage = new javax.swing.JComboBox<>();
+        jLabel3 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -197,6 +198,10 @@ public class Login extends javax.swing.JFrame {
         comboLanguage.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "English", "Sinhala" }));
         panel.add(comboLanguage, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 10, 150, 30));
 
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cazzendra/pos/ui/logo/sage_png_4.png"))); // NOI18N
+        panel.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 340, 210, 90));
+
         jLabel2.setToolTipText("");
         panel.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 660, 500));
 
@@ -275,6 +280,7 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel lblCopyrightStatement;
     private javax.swing.JLabel lblLogin;
     private javax.swing.JLabel lblTimeDay;
