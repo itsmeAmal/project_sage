@@ -48,6 +48,7 @@ public class editLecturer extends javax.swing.JDialog {
             txtEmail1.setText(lecturer.getEmail());
             txtContactNo.setText(lecturer.getContactNo());
             comboSubjects.setSelectedItem(lecturer.getDetail());
+            txtPrefixCode.setText(lecturer.getPrefixCode()); 
         } catch (SQLException ex) {
             Logger.getLogger(editLecturer.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -65,6 +66,12 @@ public class editLecturer extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(this, "Contact no could not be empty ! ", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
+
+            if (txtPrefixCode.getText().trim().equalsIgnoreCase("") || txtPrefixCode.getText().trim() == null) {
+                JOptionPane.showConfirmDialog(this, "Please add 3 digit long PREFIX for lecturer !");
+                return;
+            }
+
             lecturer lecturer = new lecturer();
             lecturer.setContactNo(txtContactNo.getText().trim());
             lecturer.setEmail(txtEmail1.getText().trim());

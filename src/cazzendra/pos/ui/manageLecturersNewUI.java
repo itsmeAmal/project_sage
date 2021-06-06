@@ -50,6 +50,11 @@ public class manageLecturersNewUI extends javax.swing.JFrame {
         int option = JOptionPane.showConfirmDialog(this, "add new lecturer?");
         if (option == JOptionPane.YES_OPTION) {
             try {
+                if (txtPrefixCode.getText().trim().equalsIgnoreCase("") || txtPrefixCode.getText().trim() == null) {
+                    JOptionPane.showConfirmDialog(this, "Please add 3 digit long PREFIX for lecturer !");
+                    return;
+                }
+
                 boolean status = lecturerController.addLecturer("", txtName.getText().trim(),
                         txtEmail1.getText().trim(), txtContactNo.getText().trim(),
                         comboSubjects.getSelectedItem().toString(), txtPrefixCode.getText().trim());
@@ -67,7 +72,7 @@ public class manageLecturersNewUI extends javax.swing.JFrame {
     private void loadLecturerData() {
         try {
             ResultSet rset = new lecturerDaoImpl().getAlllecturers();
-            String[] columnList = {"lecturer_id", "lecturer_name", "lecturer_email", "lecturer_contact_no", "lecturer_detail"};
+            String[] columnList = {"lecturer_id", "lecturer_name", "lecturer_email", "lecturer_contact_no", "lecturer_detail", "lecturer_prefix_code"};
             CommonController.loadDataToTable(tblLectures, rset, columnList);
         } catch (SQLException ex) {
             Logger.getLogger(manageLecturersNewUI.class.getName()).log(Level.SEVERE, null, ex);
@@ -90,7 +95,7 @@ public class manageLecturersNewUI extends javax.swing.JFrame {
             attributeConditionValueList.add(ACV3);
 
             ResultSet rset = new lecturerDaoImpl().getLecturerByMoreAttributes(attributeConditionValueList, CommonConstants.sql.OR);
-            String[] columnList = {"lecturer_id", "lecturer_name", "lecturer_email", "lecturer_contact_no", "lecturer_detail"};
+            String[] columnList = {"lecturer_id", "lecturer_name", "lecturer_email", "lecturer_contact_no", "lecturer_detail", "lecturer_prefix_code"};
             CommonController.loadDataToTable(tblLectures, rset, columnList);
 
         } catch (SQLException ex) {
@@ -164,11 +169,11 @@ public class manageLecturersNewUI extends javax.swing.JFrame {
 
             },
             new String [] {
-                "lecture id", "Name", "Email", "Contact No", "Subject"
+                "lecture id", "Name", "Email", "Contact No", "Subject", "Prefix Code"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -186,12 +191,15 @@ public class manageLecturersNewUI extends javax.swing.JFrame {
             tblLectures.getColumnModel().getColumn(2).setMinWidth(250);
             tblLectures.getColumnModel().getColumn(2).setPreferredWidth(250);
             tblLectures.getColumnModel().getColumn(2).setMaxWidth(250);
-            tblLectures.getColumnModel().getColumn(3).setMinWidth(200);
-            tblLectures.getColumnModel().getColumn(3).setPreferredWidth(200);
-            tblLectures.getColumnModel().getColumn(3).setMaxWidth(200);
+            tblLectures.getColumnModel().getColumn(3).setMinWidth(150);
+            tblLectures.getColumnModel().getColumn(3).setPreferredWidth(150);
+            tblLectures.getColumnModel().getColumn(3).setMaxWidth(150);
             tblLectures.getColumnModel().getColumn(4).setMinWidth(200);
             tblLectures.getColumnModel().getColumn(4).setPreferredWidth(200);
             tblLectures.getColumnModel().getColumn(4).setMaxWidth(200);
+            tblLectures.getColumnModel().getColumn(5).setMinWidth(100);
+            tblLectures.getColumnModel().getColumn(5).setPreferredWidth(100);
+            tblLectures.getColumnModel().getColumn(5).setMaxWidth(100);
         }
 
         PanelMain.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 75, 973, 530));
