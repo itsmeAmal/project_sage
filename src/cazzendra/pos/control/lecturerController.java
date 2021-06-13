@@ -65,4 +65,13 @@ public class lecturerController {
         return new lecturerDaoImpl().getLecturerByMoreAttributes(attributeConditionValueList, operator);
     }
 
+    public static boolean validatePrefixCode(String prefixCode) throws SQLException {
+        boolean status = false;
+        ResultSet rset = getLecturerResultSetByOneAttribute("lecturer_prefix_code", commonConstants.Sql.EQUAL, prefixCode);
+        if (rset.next()) {
+            status = true;
+        }
+        return status;
+    }
+
 }

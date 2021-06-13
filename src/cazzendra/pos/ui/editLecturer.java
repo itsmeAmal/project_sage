@@ -23,6 +23,7 @@ import javax.swing.JOptionPane;
 public class editLecturer extends javax.swing.JDialog {
 
     private int lecturerId;
+    private lecturer lecturer;
 
     /**
      * Creates new form editBatch
@@ -43,7 +44,7 @@ public class editLecturer extends javax.swing.JDialog {
 
     private void setDetails() {
         try {
-            lecturer lecturer = lecturerController.getLecturerByLecturerId(lecturerId);
+            lecturer = lecturerController.getLecturerByLecturerId(lecturerId);
             txtName.setText(lecturer.getName());
             txtEmail1.setText(lecturer.getEmail());
             txtContactNo.setText(lecturer.getContactNo());
@@ -82,6 +83,11 @@ public class editLecturer extends javax.swing.JDialog {
             }
             if (!validateLength()) {
                 JOptionPane.showMessageDialog(this, "Please add PREFIX code with 2 digits !", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            if (!(txtPrefixCode.getText().trim().equalsIgnoreCase(lecturer.getPrefixCode()))
+                    && lecturerController.validatePrefixCode(txtPrefixCode.getText().trim())) {
+                JOptionPane.showMessageDialog(this, "PREFIX already exist !", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
@@ -188,6 +194,8 @@ public class editLecturer extends javax.swing.JDialog {
         jLabel24.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel24.setForeground(new java.awt.Color(0, 0, 102));
         jLabel24.setText("Lecturer Prefix Code");
+
+        txtPrefixCode.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
 
         javax.swing.GroupLayout PanelSubLayout = new javax.swing.GroupLayout(PanelSub);
         PanelSub.setLayout(PanelSubLayout);

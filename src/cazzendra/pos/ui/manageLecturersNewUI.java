@@ -80,6 +80,11 @@ public class manageLecturersNewUI extends javax.swing.JFrame {
                     return;
                 }
 
+                if (lecturerController.validatePrefixCode(txtPrefixCode.getText().trim())) {
+                    JOptionPane.showMessageDialog(this, "PREFIX already exist !", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
                 boolean status = lecturerController.addLecturer("", txtName.getText().trim(),
                         txtEmail1.getText().trim(), txtContactNo.getText().trim(),
                         comboSubjects.getSelectedItem().toString(), txtPrefixCode.getText().trim());
@@ -307,6 +312,8 @@ public class manageLecturersNewUI extends javax.swing.JFrame {
 
         comboSubjects.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
         comboSubjects.setToolTipText("Type");
+
+        txtPrefixCode.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
 
         jLabel24.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel24.setForeground(new java.awt.Color(0, 0, 102));
