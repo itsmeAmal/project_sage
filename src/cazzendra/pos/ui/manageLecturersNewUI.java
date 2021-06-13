@@ -44,14 +44,39 @@ public class manageLecturersNewUI extends javax.swing.JFrame {
         txtContactNo.setText("");
         txtEmail1.setText("");
         txtName.setText("");
+        txtPrefixCode.setText("");
+    }
+
+    private boolean validateLength() {
+        boolean status = false;
+        String txtValue = txtPrefixCode.getText().trim();
+        if (txtValue.length() == 2) {
+            status = true;
+        }
+        return status;
     }
 
     private void addLecturer() {
         int option = JOptionPane.showConfirmDialog(this, "add new lecturer?");
         if (option == JOptionPane.YES_OPTION) {
             try {
+
+                if (txtName.getText().trim().equalsIgnoreCase("") || txtName.getText().trim().equalsIgnoreCase(null)) {
+                    JOptionPane.showMessageDialog(this, "Name could not be empty ! ", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                if (txtContactNo.getText().trim().equalsIgnoreCase("") || txtContactNo.getText().trim().equalsIgnoreCase(null)) {
+                    JOptionPane.showMessageDialog(this, "Contact no could not be empty ! ", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
                 if (txtPrefixCode.getText().trim().equalsIgnoreCase("") || txtPrefixCode.getText().trim() == null) {
-                    JOptionPane.showConfirmDialog(this, "Please add 3 digit long PREFIX for lecturer !");
+                    JOptionPane.showMessageDialog(this, "Please add PREFIX code !", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                if (!validateLength()) {
+                    JOptionPane.showMessageDialog(this, "Please add PREFIX code with 2 digits !", "Error", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
 
@@ -371,7 +396,6 @@ public class manageLecturersNewUI extends javax.swing.JFrame {
 
     private void btSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSaveActionPerformed
         addLecturer();
-        clearAll();
         loadLecturerData();
     }//GEN-LAST:event_btSaveActionPerformed
 

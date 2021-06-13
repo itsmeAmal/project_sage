@@ -48,10 +48,19 @@ public class editLecturer extends javax.swing.JDialog {
             txtEmail1.setText(lecturer.getEmail());
             txtContactNo.setText(lecturer.getContactNo());
             comboSubjects.setSelectedItem(lecturer.getDetail());
-            txtPrefixCode.setText(lecturer.getPrefixCode()); 
+            txtPrefixCode.setText(lecturer.getPrefixCode());
         } catch (SQLException ex) {
             Logger.getLogger(editLecturer.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    private boolean validateLength() {
+        boolean status = false;
+        String txtValue = txtPrefixCode.getText().trim();
+        if (txtValue.length() == 2) {
+            status = true;
+        }
+        return status;
     }
 
     private void updateLecturerDetails() {
@@ -68,7 +77,11 @@ public class editLecturer extends javax.swing.JDialog {
             }
 
             if (txtPrefixCode.getText().trim().equalsIgnoreCase("") || txtPrefixCode.getText().trim() == null) {
-                JOptionPane.showConfirmDialog(this, "Please add 3 digit long PREFIX for lecturer !");
+                JOptionPane.showMessageDialog(this, "Please add PREFIX code !", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            if (!validateLength()) {
+                JOptionPane.showMessageDialog(this, "Please add PREFIX code with 2 digits !", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
