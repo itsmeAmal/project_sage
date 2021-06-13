@@ -1,0 +1,18 @@
+06/13/2021
+add new column to lecturer table >>
+lecturer_prefix_code
+varchar(45)
+
+add new table >>
+CREATE TABLE `sage_kekirawa`.`attendance_v3` (
+  `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  `lec_code` VARCHAR(45),
+  `student_code` VARCHAR(45),
+  `date` DATE NOT NULL,
+  `date_time` TIMESTAMP NOT NULL,
+  `fee` DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+  `remark` VARCHAR(450),
+  `status` CHAR(1) DEFAULT 'A',
+  PRIMARY KEY (`id`)
+)
+ENGINE = InnoDB;

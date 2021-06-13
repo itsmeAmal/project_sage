@@ -45,6 +45,17 @@ public class studentController {
         return new studentDaoImpl().getStudentByOneAttribute(attribute, condition, value);
     }
 
+    public static boolean getStudentByStudentCode(String studentId) throws SQLException {
+        boolean status = false;
+        student student = getStudentByStudentId(Integer.valueOf(studentId));
+        if (student == null) {
+            status = false;
+        } else {
+            status = true;
+        }
+        return status;
+    }
+
     public static boolean updateStudentDetails(student student) throws SQLException {
         return new studentDaoImpl().updateStudent(student);
     }

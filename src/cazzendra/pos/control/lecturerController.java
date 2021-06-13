@@ -74,4 +74,21 @@ public class lecturerController {
         return status;
     }
 
+    public static lecturer getLecturerByPrefixCode(String prefixCode) throws SQLException {
+        ResultSet rset = getLecturerResultSetByOneAttribute("lecturer_prefix_code", commonConstants.Sql.EQUAL, prefixCode);
+        lecturer lecturer = null;
+        while (rset.next()) {
+            lecturer = new lecturer();
+            lecturer.setId(rset.getInt("lecturer_id"));
+            lecturer.setDetail(rset.getString("lecturer_detail"));
+            lecturer.setTitle(rset.getString("lecturer_title"));
+            lecturer.setName(rset.getString("lecturer_name"));
+            lecturer.setEmail(rset.getString("lecturer_email"));
+            lecturer.setContactNo(rset.getString("lecturer_contact_no"));
+            lecturer.setStatus(rset.getInt("lecturer_status"));
+            lecturer.setPrefixCode(rset.getString("lecturer_prefix_code"));
+        }
+        return lecturer;
+    }
+
 }

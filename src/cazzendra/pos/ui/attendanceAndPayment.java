@@ -5,19 +5,20 @@
  */
 package cazzendra.pos.ui;
 
+import cazzendra.pos.control.AttendanceV3Controller;
 import cazzendra.pos.control.CommonController;
-import cazzendra.pos.control.subjectController;
-import cazzendra.pos.core.CommonConstants;
-import cazzendra.pos.core.Loading;
+import cazzendra.pos.control.lecturerController;
+import cazzendra.pos.control.studentController;
+import cazzendra.pos.core.Validations;
+import cazzendra.pos.model.lecturer;
+import cazzendra.pos.model.student;
 import java.awt.Color;
 import java.awt.Font;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -28,98 +29,52 @@ public class attendanceAndPayment extends javax.swing.JFrame {
     /**
      * Creates new form addStudent
      */
-//    public attendanceAndPayment() {
-//        initComponents();
-//        loadSubjectsToTable();
-//        setDefaults();
-//        txtModuleCode.setVisible(false);
-//        jLabel5.setVisible(false);
-//        jLabel21.setVisible(false);
-//    }
-//
-//    private void setDefaults() {
-//        txtModuleCode.setText("");
-//        txtSubjectName.setText("");
-//        comboSemester.setSelectedIndex(0);
-//        PanelMain.setBackground(Loading.getColorCode());
-//        PanelSub.setBackground(Loading.getColorCode());
-//    }
-//    private void loadCourseDetailsDataObjectsToComboBox() {
-//        try {
-//            ResultSet rset = courseController.getAllCourses();
-//            String[] columnList = {"course_id", "course_name", "course_type", "course_detail", "course_satus"};
-//            commonController.loadDataObjectsIntoComboBox(comboCourse, rset, columnList, "course_type");
-//        } catch (SQLException ex) {
-//            Logger.getLogger(manageSubjects.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        }
-////    }
-//    private void addSubject() {
-//
-//        if (txtSubjectName.getText().trim().equalsIgnoreCase(null) || txtSubjectName.getText().trim().equalsIgnoreCase("")) {
-//            JOptionPane.showMessageDialog(this, "Please enter subject name !", "Error", JOptionPane.ERROR_MESSAGE);
-//            return;
-//        }
-//
-//        int option = JOptionPane.showConfirmDialog(this, "do you want to add new subject?");
-//        if (option == JOptionPane.YES_OPTION) {
-//            try {
-//                int courseId = 0;
-////                if (!comboCourse.getSelectedItem().toString().equalsIgnoreCase(subject.COMMON_SUBJECT)) {
-////                    DataObject dataObjCourse = (DataObject) comboCourse.getSelectedItem();
-////                    courseId = commonController.getIntOrZeroFromString(dataObjCourse.get("course_id"));
-////                }
-//                boolean status = subjectController.addSubject("", "", txtModuleCode.getText().trim(), txtSubjectName.getText().trim(),
-//                        comboSemester.getSelectedItem().toString(), courseId);
-//                if (status) {
-//                    JOptionPane.showMessageDialog(this, "Subject registered successfully !");
-//                    setDefaults();
-//                }
-//            } catch (SQLException ex) {
-//                Logger.getLogger(attendanceAndPayment.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//            }
-//        }
-//    }
-    private void loadSubjectsToTable() {
-        try {
-            ResultSet rset = subjectController.getAllSubjects();
-            String[] columnList = {"subject_id", "subject_name_concat", "subject_module_code", "subject_semester"};
-            CommonController.loadDataToTable(tblHistory, rset, columnList);
-        } catch (SQLException ex) {
-            Logger.getLogger(attendanceAndPayment.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
+    public attendanceAndPayment() {
+        initComponents();
+        loadDataToTable();
     }
 
-    private void searchSubjectByNameAndGrade() {
+    private void clearAll() {
+        txtClassFee.setText("");
+        txtStudentCode.setText("");
+    }
 
+    private void markAttendanceByCode(String studenCode) {
         try {
-            String[] columnList = {"subject_id", "subject_name_concat", "subject_module_code", "subject_semester"};
+            if (txtStudentCode.getText().trim().length() < 3) {
+                JOptionPane.showMessageDialog(this, "Please enter valid code !", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            String prefixCode = studenCode.substring(0, 2);
+            String studentCode = studenCode.substring(2);
+            student student = studentController.getStudentByStudentId(Validations.getIntOrZeroFromString(studentCode));
+            lecturer lecturer = lecturerController.getLecturerByPrefixCode(prefixCode);
 
-            ArrayList<String[]> attributeConditionValueList = new ArrayList<>();
+            if (!lecturerController.validatePrefixCode(prefixCode)) {
+                JOptionPane.showMessageDialog(this, "Invalid lecture prefix code !", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            if (student == null) {
+                JOptionPane.showMessageDialog(this, "Invalid student code !", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            AttendanceV3Controller.addAttendance(prefixCode, studentCode, CommonController.getCurrentJavaSqlDate(),
+                    Validations.getBigDecimalOrZeroFromString(txtClassFee.getText().trim()), "", lecturer.getName(), student.getName());
 
-            String[] ACV1 = {"subject_name", CommonConstants.sql.LIKE, "%" + txtSearchValue.getText().trim() + "%"};
-            attributeConditionValueList.add(ACV1);
-
-            String[] ACV2 = {"subject_semester", CommonConstants.sql.LIKE, "%" + txtSearchValue.getText().trim() + "%"};
-            attributeConditionValueList.add(ACV2);
-
-            ResultSet rset = subjectController.getSubjectByMoreAttributes(attributeConditionValueList, CommonConstants.sql.OR);
-
-            CommonController.loadDataToTable(tblHistory, rset, columnList);
+            clearAll();
         } catch (SQLException ex) {
             Logger.getLogger(attendanceAndPayment.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
 
-    private void editSelectedCourse() {
-        int selectedRaw = tblHistory.getSelectedRow();
-        if (selectedRaw == -1) {
-            JOptionPane.showMessageDialog(this, "Please select the row you want to update !", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
+    private void loadDataToTable() {
+        try {
+            ResultSet rset = AttendanceV3Controller.getAll();
+            String[] columnList = {"id", "date", "lec_code", "lecturer_name", "student_code", "student_name", "fee", "remark"};
+            CommonController.loadDataToTable(tblAttendanceV3, rset, columnList);
+        } catch (SQLException ex) {
+            Logger.getLogger(attendanceAndPayment.class.getName()).log(Level.SEVERE, null, ex);
         }
-        DefaultTableModel dtm = (DefaultTableModel) tblHistory.getModel();
-        int subjectId = CommonController.getIntOrZeroFromString(dtm.getValueAt(selectedRaw, 0).toString());
-        new editSubject(this, true, subjectId).setVisible(true);
     }
 
     /**
@@ -133,68 +88,90 @@ public class attendanceAndPayment extends javax.swing.JFrame {
 
         PanelMain = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblHistory = new javax.swing.JTable();
+        tblAttendanceV3 = new javax.swing.JTable();
         PanelSub = new javax.swing.JPanel();
-        txtSubjectName = new javax.swing.JTextField();
+        txtStudentCode = new javax.swing.JTextField();
         btSave = new javax.swing.JButton();
         jLabel20 = new javax.swing.JLabel();
-        txtSearchValue = new javax.swing.JTextField();
+        txtClassFee = new javax.swing.JTextField();
         jLabel21 = new javax.swing.JLabel();
         jLabel24 = new javax.swing.JLabel();
         jLabel25 = new javax.swing.JLabel();
-        jPanel1 = new javax.swing.JPanel();
         jDateChooser1 = new com.toedter.calendar.JDateChooser();
         jDateChooser2 = new com.toedter.calendar.JDateChooser();
         btSave1 = new javax.swing.JButton();
+        comboLecturer = new javax.swing.JComboBox<>();
+        jLabel26 = new javax.swing.JLabel();
+        jLabel27 = new javax.swing.JLabel();
+        jLabel28 = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
+        jTextField2 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Attendance & Payment");
         setResizable(false);
 
-        PanelMain.setBackground(new java.awt.Color(102, 102, 255));
+        PanelMain.setBackground(new java.awt.Color(0, 0, 102));
 
-        tblHistory.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
-        tblHistory.getTableHeader().setFont(new Font("Ubuntu", Font.BOLD, 18));
-        tblHistory.getTableHeader().setOpaque(false);
-        tblHistory.getTableHeader().setBackground(new Color(0, 0, 102));
-        tblHistory.getTableHeader().setForeground(new Color(255, 255, 255));
-        tblHistory.setModel(new javax.swing.table.DefaultTableModel(
+        tblAttendanceV3.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
+        tblAttendanceV3.getTableHeader().setFont(new Font("Ubuntu", Font.BOLD, 18));
+        tblAttendanceV3.getTableHeader().setOpaque(false);
+        tblAttendanceV3.getTableHeader().setBackground(new Color(0, 0, 102));
+        tblAttendanceV3.getTableHeader().setForeground(new Color(255, 255, 255));
+        tblAttendanceV3.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Lecturer", "Attended Date", "Detail"
+                "id", "Date", "Lec. Code", "Lec. Name", "Stu. Code", "Stu. Name", "Fee", "Detail"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        tblHistory.setRowHeight(20);
-        tblHistory.setRowMargin(2);
-        tblHistory.getTableHeader().setReorderingAllowed(false);
-        jScrollPane1.setViewportView(tblHistory);
-        if (tblHistory.getColumnModel().getColumnCount() > 0) {
-            tblHistory.getColumnModel().getColumn(0).setResizable(false);
-            tblHistory.getColumnModel().getColumn(0).setPreferredWidth(0);
-            tblHistory.getColumnModel().getColumn(1).setResizable(false);
-            tblHistory.getColumnModel().getColumn(2).setResizable(false);
-            tblHistory.getColumnModel().getColumn(2).setPreferredWidth(0);
+        tblAttendanceV3.setRowHeight(20);
+        tblAttendanceV3.setRowMargin(2);
+        tblAttendanceV3.getTableHeader().setReorderingAllowed(false);
+        jScrollPane1.setViewportView(tblAttendanceV3);
+        if (tblAttendanceV3.getColumnModel().getColumnCount() > 0) {
+            tblAttendanceV3.getColumnModel().getColumn(0).setMinWidth(0);
+            tblAttendanceV3.getColumnModel().getColumn(0).setPreferredWidth(0);
+            tblAttendanceV3.getColumnModel().getColumn(0).setMaxWidth(0);
+            tblAttendanceV3.getColumnModel().getColumn(1).setMinWidth(100);
+            tblAttendanceV3.getColumnModel().getColumn(1).setPreferredWidth(100);
+            tblAttendanceV3.getColumnModel().getColumn(1).setMaxWidth(100);
+            tblAttendanceV3.getColumnModel().getColumn(2).setMinWidth(80);
+            tblAttendanceV3.getColumnModel().getColumn(2).setPreferredWidth(80);
+            tblAttendanceV3.getColumnModel().getColumn(2).setMaxWidth(80);
+            tblAttendanceV3.getColumnModel().getColumn(3).setResizable(false);
+            tblAttendanceV3.getColumnModel().getColumn(4).setMinWidth(80);
+            tblAttendanceV3.getColumnModel().getColumn(4).setPreferredWidth(80);
+            tblAttendanceV3.getColumnModel().getColumn(4).setMaxWidth(80);
+            tblAttendanceV3.getColumnModel().getColumn(5).setResizable(false);
+            tblAttendanceV3.getColumnModel().getColumn(6).setMinWidth(100);
+            tblAttendanceV3.getColumnModel().getColumn(6).setPreferredWidth(100);
+            tblAttendanceV3.getColumnModel().getColumn(6).setMaxWidth(100);
+            tblAttendanceV3.getColumnModel().getColumn(7).setMinWidth(0);
+            tblAttendanceV3.getColumnModel().getColumn(7).setPreferredWidth(0);
+            tblAttendanceV3.getColumnModel().getColumn(7).setMaxWidth(0);
         }
 
-        txtSubjectName.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
-        txtSubjectName.setToolTipText("Module Name");
-        txtSubjectName.setSelectedTextColor(new java.awt.Color(0, 0, 0));
-        txtSubjectName.setSelectionColor(new java.awt.Color(255, 255, 0));
+        PanelSub.setBackground(new java.awt.Color(51, 51, 255));
+
+        txtStudentCode.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
+        txtStudentCode.setToolTipText("");
+        txtStudentCode.setSelectedTextColor(new java.awt.Color(0, 0, 0));
+        txtStudentCode.setSelectionColor(new java.awt.Color(255, 255, 0));
 
         btSave.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
         btSave.setForeground(new java.awt.Color(255, 255, 255));
         btSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cazzendra/pos/ui/icons/addItem.png"))); // NOI18N
-        btSave.setToolTipText("Add new subject");
+        btSave.setToolTipText("");
         btSave.setBorder(null);
         btSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -203,26 +180,16 @@ public class attendanceAndPayment extends javax.swing.JFrame {
         });
 
         jLabel20.setFont(new java.awt.Font("Ubuntu Medium", 1, 14)); // NOI18N
-        jLabel20.setForeground(new java.awt.Color(0, 0, 102));
+        jLabel20.setForeground(new java.awt.Color(255, 255, 255));
         jLabel20.setText("Lecture Code and Student Code");
 
-        txtSearchValue.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
-        txtSearchValue.setToolTipText("Search By Subject and Grade");
-        txtSearchValue.setSelectedTextColor(new java.awt.Color(0, 0, 0));
-        txtSearchValue.setSelectionColor(new java.awt.Color(255, 255, 0));
-        txtSearchValue.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtSearchValueActionPerformed(evt);
-            }
-        });
-        txtSearchValue.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                txtSearchValueKeyReleased(evt);
-            }
-        });
+        txtClassFee.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
+        txtClassFee.setToolTipText("");
+        txtClassFee.setSelectedTextColor(new java.awt.Color(0, 0, 0));
+        txtClassFee.setSelectionColor(new java.awt.Color(255, 255, 0));
 
         jLabel21.setFont(new java.awt.Font("Ubuntu Medium", 1, 14)); // NOI18N
-        jLabel21.setForeground(new java.awt.Color(0, 0, 102));
+        jLabel21.setForeground(new java.awt.Color(255, 255, 255));
         jLabel21.setText("Class Fee");
 
         javax.swing.GroupLayout PanelSubLayout = new javax.swing.GroupLayout(PanelSub);
@@ -233,15 +200,15 @@ public class attendanceAndPayment extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(PanelSubLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(PanelSubLayout.createSequentialGroup()
-                        .addComponent(txtSubjectName, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtStudentCode, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(42, 42, 42)
-                        .addComponent(txtSearchValue, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtClassFee, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(PanelSubLayout.createSequentialGroup()
                         .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btSave, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btSave, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         PanelSubLayout.setVerticalGroup(
@@ -253,41 +220,41 @@ public class attendanceAndPayment extends javax.swing.JFrame {
                     .addComponent(jLabel21))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(PanelSubLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtSubjectName, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtSearchValue, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btSave, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(19, Short.MAX_VALUE))
+                    .addComponent(txtStudentCode, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtClassFee, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btSave, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
 
         jLabel24.setFont(new java.awt.Font("Ubuntu Medium", 0, 14)); // NOI18N
-        jLabel24.setForeground(new java.awt.Color(0, 0, 102));
+        jLabel24.setForeground(new java.awt.Color(255, 255, 255));
         jLabel24.setText("From Date");
 
         jLabel25.setFont(new java.awt.Font("Ubuntu Medium", 0, 14)); // NOI18N
-        jLabel25.setForeground(new java.awt.Color(0, 0, 102));
+        jLabel25.setForeground(new java.awt.Color(255, 255, 255));
         jLabel25.setText("To Date");
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 322, Short.MAX_VALUE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
 
         btSave1.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
         btSave1.setForeground(new java.awt.Color(255, 255, 255));
         btSave1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cazzendra/pos/ui/icons/search_32x32.png"))); // NOI18N
-        btSave1.setToolTipText("Add new subject");
+        btSave1.setToolTipText("");
         btSave1.setBorder(null);
-        btSave1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btSave1ActionPerformed(evt);
-            }
-        });
+
+        jLabel26.setFont(new java.awt.Font("Ubuntu Medium", 0, 14)); // NOI18N
+        jLabel26.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel26.setText("Total Student Count");
+
+        jLabel27.setFont(new java.awt.Font("Ubuntu Medium", 0, 14)); // NOI18N
+        jLabel27.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel27.setText("Lecturer");
+
+        jLabel28.setFont(new java.awt.Font("Ubuntu Medium", 0, 14)); // NOI18N
+        jLabel28.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel28.setText("Fee Total ");
+
+        jTextField1.setEditable(false);
+
+        jTextField2.setEditable(false);
 
         javax.swing.GroupLayout PanelMainLayout = new javax.swing.GroupLayout(PanelMain);
         PanelMain.setLayout(PanelMainLayout);
@@ -296,22 +263,32 @@ public class attendanceAndPayment extends javax.swing.JFrame {
             .addGroup(PanelMainLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(PanelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelMainLayout.createSequentialGroup()
+                        .addComponent(jLabel24)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel25)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(37, 37, 37)
+                        .addComponent(jLabel27)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(comboLecturer, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btSave1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 175, Short.MAX_VALUE))
                     .addComponent(PanelSub, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelMainLayout.createSequentialGroup()
-                        .addGroup(PanelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, PanelMainLayout.createSequentialGroup()
-                                .addComponent(jLabel24)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel25)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btSave1, javax.swing.GroupLayout.DEFAULT_SIZE, 77, Short.MAX_VALUE))
-                            .addComponent(jScrollPane1))
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jLabel26)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(88, 88, 88)
+                        .addComponent(jLabel28)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         PanelMainLayout.setVerticalGroup(
@@ -319,21 +296,27 @@ public class attendanceAndPayment extends javax.swing.JFrame {
             .addGroup(PanelMainLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(PanelSub, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(36, 36, 36)
                 .addGroup(PanelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(PanelMainLayout.createSequentialGroup()
-                        .addComponent(jLabel24)
-                        .addGap(19, 19, 19))
-                    .addGroup(PanelMainLayout.createSequentialGroup()
-                        .addGroup(PanelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jDateChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel25)
-                            .addComponent(jDateChooser2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btSave1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                    .addComponent(jDateChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jDateChooser2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btSave1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel24, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel25, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel27, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(comboLecturer))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 393, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(PanelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 492, Short.MAX_VALUE))
+                    .addComponent(jTextField2, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelMainLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(PanelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel26)
+                                .addComponent(jLabel28, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
         );
 
@@ -353,21 +336,9 @@ public class attendanceAndPayment extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSaveActionPerformed
-//        addSubject();
-        loadSubjectsToTable();
+        markAttendanceByCode(txtStudentCode.getText().trim());
+        loadDataToTable();
     }//GEN-LAST:event_btSaveActionPerformed
-
-    private void txtSearchValueKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchValueKeyReleased
-        searchSubjectByNameAndGrade();
-    }//GEN-LAST:event_txtSearchValueKeyReleased
-
-    private void txtSearchValueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSearchValueActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtSearchValueActionPerformed
-
-    private void btSave1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSave1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btSave1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -412,16 +383,21 @@ public class attendanceAndPayment extends javax.swing.JFrame {
     private javax.swing.JPanel PanelSub;
     private javax.swing.JButton btSave;
     private javax.swing.JButton btSave1;
+    private javax.swing.JComboBox<String> comboLecturer;
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private com.toedter.calendar.JDateChooser jDateChooser2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel27;
+    private javax.swing.JLabel jLabel28;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tblHistory;
-    private javax.swing.JTextField txtSearchValue;
-    private javax.swing.JTextField txtSubjectName;
+    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTable tblAttendanceV3;
+    private javax.swing.JTextField txtClassFee;
+    private javax.swing.JTextField txtStudentCode;
     // End of variables declaration//GEN-END:variables
 }
