@@ -4,15 +4,17 @@ lecturer_prefix_code
 varchar(45)
 
 add new table >>
-CREATE TABLE `sage_kekirawa`.`attendance_v3` (
-  `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
-  `lec_code` VARCHAR(45),
-  `student_code` VARCHAR(45),
-  `date` DATE NOT NULL,
-  `date_time` TIMESTAMP NOT NULL,
-  `fee` DECIMAL(10,2) NOT NULL DEFAULT 0.00,
-  `remark` VARCHAR(450),
-  `status` CHAR(1) DEFAULT 'A',
+DROP TABLE IF EXISTS `sage_kekirawa`.`attendance_v3`;
+CREATE TABLE  `sage_kekirawa`.`attendance_v3` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `lec_code` varchar(45) DEFAULT NULL,
+  `student_code` varchar(45) DEFAULT NULL,
+  `att_date` date NOT NULL,
+  `date_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `fee` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `remark` varchar(450) DEFAULT NULL,
+  `status` char(1) DEFAULT 'A',
+  `lecturer_name` varchar(450) DEFAULT NULL,
+  `student_name` varchar(450) DEFAULT NULL,
   PRIMARY KEY (`id`)
-)
-ENGINE = InnoDB;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
