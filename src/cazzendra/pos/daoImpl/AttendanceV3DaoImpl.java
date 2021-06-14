@@ -12,6 +12,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  *
@@ -19,13 +20,13 @@ import java.sql.SQLException;
  */
 public class AttendanceV3DaoImpl implements AttendanceV3Dao {
 
-    private String selectQuery = "select id, lec_code, student_code, date, date_time, fee, remark, status,"
+    private String selectQuery = "select id, lec_code, student_code, att_date, date_time, fee, remark, status,"
             + " lecturer_name, student_name from attendance_v3";
 
     @Override
     public boolean addAttendanceV3(attendanceV3 attendanceV3) throws SQLException {
         Connection con = DatabaseConnection.getDatabaseConnection();
-        PreparedStatement ps = con.prepareStatement("insert into attendance_v3(lec_code, student_code, date, fee, "
+        PreparedStatement ps = con.prepareStatement("insert into attendance_v3(lec_code, student_code, att_date, fee, "
                 + " remark, lecturer_name, student_name)"
                 + " values (?,?,?,?,?,?,?)");
         ps.setString(1, attendanceV3.getLecturerCode());
@@ -58,6 +59,10 @@ public class AttendanceV3DaoImpl implements AttendanceV3Dao {
     @Override
     public ResultSet getAllV3Records() throws SQLException {
         return new CommonDaoImpl().getAllRecords(selectQuery);
+    }
+
+    public ResultSet getByMoreAttributes(ArrayList<String[]> attributeConditionValueList, String Operator) throws SQLException {
+        return new CommonDaoImpl().getResultByAttributesWithJoinOperator(selectQuery, attributeConditionValueList, Operator);
     }
 
 }

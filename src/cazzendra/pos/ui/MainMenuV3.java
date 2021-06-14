@@ -111,7 +111,7 @@ public class MainMenuV3 extends javax.swing.JFrame {
         jLabel16 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Main Menu");
         setBackground(new java.awt.Color(0, 0, 102));
         setMaximumSize(new java.awt.Dimension(1366, 720));

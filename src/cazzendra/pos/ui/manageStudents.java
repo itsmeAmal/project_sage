@@ -9,7 +9,6 @@ import cazzendra.pos.control.CommonController;
 import cazzendra.pos.control.studentController;
 import cazzendra.pos.core.CommonConstants;
 import cazzendra.pos.core.Loading;
-import cazzendra.pos.core.QR;
 import cazzendra.pos.core.Validations;
 import cazzendra.pos.daoImpl.studentDaoImpl;
 import java.awt.Color;
@@ -61,10 +60,10 @@ public class manageStudents extends javax.swing.JFrame {
             return;
         }
 
-        if (calDob.getDate() == null || calDob.getDate().equals("")) {
-            JOptionPane.showMessageDialog(this, "Please enter student Date Of Birth !", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
+//        if (calDob.getDate() == null || calDob.getDate().equals("")) {
+//            JOptionPane.showMessageDialog(this, "Please enter student Date Of Birth !", "Error", JOptionPane.ERROR_MESSAGE);
+//            return;
+//        }
 
         if (txtContactNo.getText().trim().equalsIgnoreCase(null) || txtContactNo.getText().trim().equalsIgnoreCase("")) {
             JOptionPane.showMessageDialog(this, "Please enter student Contact No !", "Error", JOptionPane.ERROR_MESSAGE);

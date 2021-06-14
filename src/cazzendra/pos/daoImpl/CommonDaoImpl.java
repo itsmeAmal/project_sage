@@ -65,7 +65,6 @@ public class CommonDaoImpl implements commonDao {
             }
 
             ps = con.prepareStatement(query);
-
             for (int i = 0; i < noOfConditions; i++) {
                 ps.setString(i + 1, attributeConditionValueList.get(i)[2]);
             }
@@ -146,7 +145,7 @@ public class CommonDaoImpl implements commonDao {
         Connection con = DatabaseConnection.getDatabaseConnection();
         PreparedStatement ps = con.prepareStatement("select item_name, item_barcode, item_code,  current_stock_item_id, sum(current_stock_qty) as stock "
                 + " from current_stock join item on current_stock_item_id = item_id where item_name like ? group by current_stock_item_id ");
-        ps.setString(1,"%" + attribute + "%");
+        ps.setString(1, "%" + attribute + "%");
         return ps.executeQuery();
     }
 

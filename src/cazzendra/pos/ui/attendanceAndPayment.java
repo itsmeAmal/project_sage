@@ -9,29 +9,36 @@ import cazzendra.pos.control.AttendanceV3Controller;
 import cazzendra.pos.control.CommonController;
 import cazzendra.pos.control.lecturerController;
 import cazzendra.pos.control.studentController;
+import cazzendra.pos.core.CommonConstants;
 import cazzendra.pos.core.Validations;
 import cazzendra.pos.model.lecturer;
 import cazzendra.pos.model.student;
 import java.awt.Color;
 import java.awt.Font;
+import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author Amal
  */
 public class attendanceAndPayment extends javax.swing.JFrame {
-
     /**
      * Creates new form addStudent
      */
     public attendanceAndPayment() {
         initComponents();
         loadDataToTable();
+        calculateFeeTotal();
+        loadLecturerCode();
+        txtAttendedStudentCount.setText(Integer.toString(tblAttendanceV3.getRowCount()));
+        System.out.println("rc : " + tblAttendanceV3.getRowCount());
     }
 
     private void clearAll() {
@@ -70,8 +77,58 @@ public class attendanceAndPayment extends javax.swing.JFrame {
     private void loadDataToTable() {
         try {
             ResultSet rset = AttendanceV3Controller.getAll();
-            String[] columnList = {"id", "date", "lec_code", "lecturer_name", "student_code", "student_name", "fee", "remark"};
+            String[] columnList = {"id", "att_date", "lec_code", "lecturer_name", "student_code", "student_name", "fee", "remark"};
             CommonController.loadDataToTable(tblAttendanceV3, rset, columnList);
+        } catch (SQLException ex) {
+            Logger.getLogger(attendanceAndPayment.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void calculateFeeTotal() {
+        BigDecimal feeTotal = BigDecimal.ZERO;
+        DefaultTableModel dtm = (DefaultTableModel) tblAttendanceV3.getModel();
+        for (int i = 0; i < dtm.getRowCount(); i++) {
+            BigDecimal lineTotal = Validations.getBigDecimalOrZeroFromString(dtm.getValueAt(i, 6).toString());
+            feeTotal = feeTotal.add(lineTotal);
+        }
+        txtFeeTotal.setText(Validations.formatWithTwoDigits(feeTotal.toString()));
+    }
+
+    private void advanceSearch() {
+        try {
+            DefaultTableModel dtm = (DefaultTableModel) tblAttendanceV3.getModel();
+            dtm.setRowCount(0);
+
+            ArrayList<String[]> attributeConditionValueList = new ArrayList<>();
+
+            if (dateChooserFromDate.getDate() != null) {
+                String[] ACV1 = {"att_date", CommonConstants.sql.EQUAL,
+                    Validations.getSqlDateByUtilDate(dateChooserFromDate.getDate()).toString()};
+                attributeConditionValueList.add(ACV1);
+            }
+
+            if (!comboLecturerPrefixCode.getSelectedItem().toString().equalsIgnoreCase("All")) {
+                String[] ACV2 = {"lec_code", CommonConstants.sql.EQUAL, comboLecturerPrefixCode.getSelectedItem().toString()};
+                attributeConditionValueList.add(ACV2);
+            }
+
+            ResultSet rset = AttendanceV3Controller.getByMoreAttributes(attributeConditionValueList, CommonConstants.sql.AND);
+
+            String[] columnList = {"id", "att_date", "lec_code", "lecturer_name", "student_code", "student_name", "fee", "remark"};
+            CommonController.loadDataToTable(tblAttendanceV3, rset, columnList);
+
+            txtAttendedStudentCount.setText(Integer.toString(tblAttendanceV3.getRowCount()));
+
+        } catch (SQLException ex) {
+            Logger.getLogger(attendanceAndPayment.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void loadLecturerCode() {
+        try {
+            ResultSet rset = lecturerController.getAllLecturers();
+            CommonController.loadDataToComboBox(comboLecturerPrefixCode, rset, "lecturer_prefix_code");
+            comboLecturerPrefixCode.addItem("All");
         } catch (SQLException ex) {
             Logger.getLogger(attendanceAndPayment.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -96,16 +153,14 @@ public class attendanceAndPayment extends javax.swing.JFrame {
         txtClassFee = new javax.swing.JTextField();
         jLabel21 = new javax.swing.JLabel();
         jLabel24 = new javax.swing.JLabel();
-        jLabel25 = new javax.swing.JLabel();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
-        jDateChooser2 = new com.toedter.calendar.JDateChooser();
+        dateChooserFromDate = new com.toedter.calendar.JDateChooser();
         btSave1 = new javax.swing.JButton();
-        comboLecturer = new javax.swing.JComboBox<>();
+        comboLecturerPrefixCode = new javax.swing.JComboBox<>();
         jLabel26 = new javax.swing.JLabel();
         jLabel27 = new javax.swing.JLabel();
         jLabel28 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
+        txtFeeTotal = new javax.swing.JTextField();
+        txtAttendedStudentCount = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Attendance & Payment");
@@ -209,7 +264,7 @@ public class attendanceAndPayment extends javax.swing.JFrame {
                         .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btSave, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(498, Short.MAX_VALUE))
         );
         PanelSubLayout.setVerticalGroup(
             PanelSubLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -219,26 +274,30 @@ public class attendanceAndPayment extends javax.swing.JFrame {
                     .addComponent(jLabel20)
                     .addComponent(jLabel21))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(PanelSubLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtStudentCode, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtClassFee, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btSave, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(PanelSubLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btSave, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(PanelSubLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtStudentCode, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtClassFee, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(34, Short.MAX_VALUE))
         );
 
         jLabel24.setFont(new java.awt.Font("Ubuntu Medium", 0, 14)); // NOI18N
         jLabel24.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel24.setText("From Date");
-
-        jLabel25.setFont(new java.awt.Font("Ubuntu Medium", 0, 14)); // NOI18N
-        jLabel25.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel25.setText("To Date");
+        jLabel24.setText("Class Date");
 
         btSave1.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
         btSave1.setForeground(new java.awt.Color(255, 255, 255));
         btSave1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cazzendra/pos/ui/icons/search_32x32.png"))); // NOI18N
         btSave1.setToolTipText("");
         btSave1.setBorder(null);
+        btSave1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btSave1ActionPerformed(evt);
+            }
+        });
+
+        comboLecturerPrefixCode.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
 
         jLabel26.setFont(new java.awt.Font("Ubuntu Medium", 0, 14)); // NOI18N
         jLabel26.setForeground(new java.awt.Color(255, 255, 255));
@@ -252,9 +311,17 @@ public class attendanceAndPayment extends javax.swing.JFrame {
         jLabel28.setForeground(new java.awt.Color(255, 255, 255));
         jLabel28.setText("Fee Total ");
 
-        jTextField1.setEditable(false);
+        txtFeeTotal.setEditable(false);
+        txtFeeTotal.setBackground(new java.awt.Color(255, 255, 0));
+        txtFeeTotal.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        txtFeeTotal.setForeground(new java.awt.Color(255, 0, 0));
+        txtFeeTotal.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
-        jTextField2.setEditable(false);
+        txtAttendedStudentCount.setEditable(false);
+        txtAttendedStudentCount.setBackground(new java.awt.Color(255, 255, 0));
+        txtAttendedStudentCount.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        txtAttendedStudentCount.setForeground(new java.awt.Color(255, 0, 0));
+        txtAttendedStudentCount.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
         javax.swing.GroupLayout PanelMainLayout = new javax.swing.GroupLayout(PanelMain);
         PanelMain.setLayout(PanelMainLayout);
@@ -267,28 +334,24 @@ public class attendanceAndPayment extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelMainLayout.createSequentialGroup()
                         .addComponent(jLabel24)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel25)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(37, 37, 37)
+                        .addComponent(dateChooserFromDate, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addComponent(jLabel27)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(comboLecturer, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(comboLecturerPrefixCode, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btSave1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 175, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(PanelSub, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelMainLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jLabel26)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtAttendedStudentCount, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(88, 88, 88)
                         .addComponent(jLabel28)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtFeeTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         PanelMainLayout.setVerticalGroup(
@@ -298,25 +361,21 @@ public class attendanceAndPayment extends javax.swing.JFrame {
                 .addComponent(PanelSub, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(36, 36, 36)
                 .addGroup(PanelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jDateChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jDateChooser2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(dateChooserFromDate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btSave1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel24, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel25, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel27, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(comboLecturer))
+                    .addComponent(comboLecturerPrefixCode))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 393, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(PanelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(txtAttendedStudentCount, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel28, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelMainLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(PanelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel26)
-                                .addComponent(jLabel28, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(txtFeeTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel26, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -338,7 +397,13 @@ public class attendanceAndPayment extends javax.swing.JFrame {
     private void btSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSaveActionPerformed
         markAttendanceByCode(txtStudentCode.getText().trim());
         loadDataToTable();
+        calculateFeeTotal();
     }//GEN-LAST:event_btSaveActionPerformed
+
+    private void btSave1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSave1ActionPerformed
+        advanceSearch();
+        calculateFeeTotal();
+    }//GEN-LAST:event_btSave1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -383,21 +448,19 @@ public class attendanceAndPayment extends javax.swing.JFrame {
     private javax.swing.JPanel PanelSub;
     private javax.swing.JButton btSave;
     private javax.swing.JButton btSave1;
-    private javax.swing.JComboBox<String> comboLecturer;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
-    private com.toedter.calendar.JDateChooser jDateChooser2;
+    private javax.swing.JComboBox<String> comboLecturerPrefixCode;
+    private com.toedter.calendar.JDateChooser dateChooserFromDate;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel24;
-    private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JTable tblAttendanceV3;
+    private javax.swing.JTextField txtAttendedStudentCount;
     private javax.swing.JTextField txtClassFee;
+    private javax.swing.JTextField txtFeeTotal;
     private javax.swing.JTextField txtStudentCode;
     // End of variables declaration//GEN-END:variables
 }
