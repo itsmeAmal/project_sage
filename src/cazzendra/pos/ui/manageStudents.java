@@ -65,10 +65,10 @@ public class manageStudents extends javax.swing.JFrame {
 //            return;
 //        }
 
-        if (txtContactNo.getText().trim().equalsIgnoreCase(null) || txtContactNo.getText().trim().equalsIgnoreCase("")) {
-            JOptionPane.showMessageDialog(this, "Please enter student Contact No !", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
+//        if (txtContactNo.getText().trim().equalsIgnoreCase(null) || txtContactNo.getText().trim().equalsIgnoreCase("")) {
+//            JOptionPane.showMessageDialog(this, "Please enter student Contact No !", "Error", JOptionPane.ERROR_MESSAGE);
+//            return;
+//        }
 
         try {
             int option = JOptionPane.showConfirmDialog(this, "Are you sure you want to save this student details ?");
@@ -585,7 +585,6 @@ public class manageStudents extends javax.swing.JFrame {
     private void btSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSaveActionPerformed
         addStudent();
         setNextIdAndQrCode();
-
     }//GEN-LAST:event_btSaveActionPerformed
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
