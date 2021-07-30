@@ -5,7 +5,14 @@
  */
 package cazzendra.pos.ui;
 
+import cazzendra.pos.control.AttendanceV3Controller;
 import cazzendra.pos.core.Loading;
+import cazzendra.pos.core.Validations;
+import cazzendra.pos.model.attendanceV3;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -13,8 +20,10 @@ import cazzendra.pos.core.Loading;
  */
 public class EditPayment extends javax.swing.JDialog {
 
+    attendanceV3 attendanceV3 = new attendanceV3();
+
     /**
-     * Creates new form editBatch
+     * Creates new form editPayment
      *
      * @param parent
      * @param modal
@@ -24,10 +33,32 @@ public class EditPayment extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         PanelMain.setBackground(Loading.getColorCode());
-        PanelSub.setBackground(Loading.getColorCode());
+        setData(paymentId);
     }
 
-  
+    private void setData(int id) {
+        try {
+            attendanceV3 = AttendanceV3Controller.getPaymentById(id);
+            txtClassFee.setText(attendanceV3.getFee().toString());
+        } catch (SQLException ex) {
+            Logger.getLogger(EditPayment.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void updatePayment() {
+        try {
+            boolean successStatus = new AttendanceV3Controller().updatePayment(attendanceV3.getId(),
+                    Validations.getBigDecimalOrZeroFromString(txtClassFee.getText().trim()));
+
+            if (successStatus) {
+                JOptionPane.showMessageDialog(this, "Payment updated successfully.", "Success", JOptionPane.DEFAULT_OPTION);
+                this.dispose();
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(EditPayment.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -40,45 +71,59 @@ public class EditPayment extends javax.swing.JDialog {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
         PanelMain = new javax.swing.JPanel();
-        PanelSub = new javax.swing.JPanel();
         btSave2 = new javax.swing.JButton();
         jLabel19 = new javax.swing.JLabel();
+        txtClassFee = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Payment");
+        setTitle("Edit Payment");
 
         PanelMain.setBackground(new java.awt.Color(0, 0, 102));
-
-        PanelSub.setBackground(new java.awt.Color(0, 0, 102));
-        PanelSub.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btSave2.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
         btSave2.setForeground(new java.awt.Color(255, 255, 255));
         btSave2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/ttms/labelIcons2/saveIcon.png"))); // NOI18N
         btSave2.setToolTipText("Update Sudent");
         btSave2.setBorder(null);
-        PanelSub.add(btSave2, new org.netbeans.lib.awtextra.AbsoluteConstraints(259, 367, -1, -1));
+        btSave2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btSave2ActionPerformed(evt);
+            }
+        });
 
         jLabel19.setFont(new java.awt.Font("Ubuntu Medium", 0, 24)); // NOI18N
-        jLabel19.setForeground(new java.awt.Color(0, 0, 102));
+        jLabel19.setForeground(new java.awt.Color(255, 255, 255));
         jLabel19.setText("Rs.");
-        PanelSub.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(19, 315, -1, -1));
+
+        txtClassFee.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
+        txtClassFee.setToolTipText("");
+        txtClassFee.setSelectedTextColor(new java.awt.Color(0, 0, 0));
+        txtClassFee.setSelectionColor(new java.awt.Color(255, 255, 0));
 
         javax.swing.GroupLayout PanelMainLayout = new javax.swing.GroupLayout(PanelMain);
         PanelMain.setLayout(PanelMainLayout);
         PanelMainLayout.setHorizontalGroup(
             PanelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelMainLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(PanelSub, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGap(11, 11, 11)
+                .addGroup(PanelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btSave2)
+                    .addGroup(PanelMainLayout.createSequentialGroup()
+                        .addComponent(jLabel19)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtClassFee, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(45, Short.MAX_VALUE))
         );
         PanelMainLayout.setVerticalGroup(
             PanelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelMainLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(PanelSub, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(50, 50, 50)
+                .addGroup(PanelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtClassFee, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel19))
+                .addGap(18, 18, 18)
+                .addComponent(btSave2)
+                .addContainerGap(46, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -89,12 +134,16 @@ public class EditPayment extends javax.swing.JDialog {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(PanelMain, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(PanelMain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btSave2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSave2ActionPerformed
+        updatePayment();
+    }//GEN-LAST:event_btSave2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -155,9 +204,9 @@ public class EditPayment extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel PanelMain;
-    private javax.swing.JPanel PanelSub;
     private javax.swing.JButton btSave2;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JLabel jLabel19;
+    private javax.swing.JTextField txtClassFee;
     // End of variables declaration//GEN-END:variables
 }

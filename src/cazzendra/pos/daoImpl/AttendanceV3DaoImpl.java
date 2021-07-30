@@ -8,6 +8,7 @@ package cazzendra.pos.daoImpl;
 import cazzendra.pos.connection.DatabaseConnection;
 import cazzendra.pos.dao.AttendanceV3Dao;
 import cazzendra.pos.model.attendanceV3;
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -65,4 +66,14 @@ public class AttendanceV3DaoImpl implements AttendanceV3Dao {
         return new CommonDaoImpl().getResultByAttributesWithJoinOperator(selectQuery, attributeConditionValueList, Operator);
     }
 
+    @Override
+    public boolean updatePayment(int paymentId, BigDecimal paymentAmount) throws SQLException {
+        Connection con = DatabaseConnection.getDatabaseConnection();
+        PreparedStatement ps = con.prepareStatement("update attendance_v3 set fee=? where id=?");
+        ps.setBigDecimal(1, paymentAmount);
+        ps.setInt(2, paymentId);
+        ps.executeUpdate();
+        ps.close();
+        return true;
+    }
 }
