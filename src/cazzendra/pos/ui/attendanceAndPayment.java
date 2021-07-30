@@ -47,7 +47,7 @@ public class attendanceAndPayment extends javax.swing.JFrame {
         Month = now.getMonth().toString();
         Year = Integer.toString(now.getYear());
         //------------------
-
+        chkBoxMonthlyFee.setSelected(false);
         loadDataToTable();
         calculateFeeTotal();
         loadLecturerCode();
@@ -61,6 +61,7 @@ public class attendanceAndPayment extends javax.swing.JFrame {
     private void clearAll() {
         txtClassFee.setText("");
         txtStudentCode.setText("");
+        chkBoxMonthlyFee.setSelected(false);
     }
 
     private void markAttendanceByCode(String studenCode) {
@@ -82,10 +83,33 @@ public class attendanceAndPayment extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Invalid student code !", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
+            String isMonthlyFee = "";
+            if (chkBoxMonthlyFee.isSelected()) {
+                isMonthlyFee = "Monthly Fee";
+            }else{
+                isMonthlyFee = "Day Fee";
+            }
+
             AttendanceV3Controller.addAttendance(prefixCode, studentCode, CommonController.getCurrentJavaSqlDate(),
-                    Validations.getBigDecimalOrZeroFromString(txtClassFee.getText().trim()), "", lecturer.getName(), student.getName());
+                    Validations.getBigDecimalOrZeroFromString(txtClassFee.getText().trim()), isMonthlyFee, lecturer.getName(), student.getName());
 
             clearAll();
+        } catch (SQLException ex) {
+            Logger.getLogger(attendanceAndPayment.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void searchPaymentsByStudentCode(String studenCode) {
+        try {
+            System.out.println("innnnnnnnn11111111111");
+            if ((txtStudentCode.getText().trim().length() > 3)) {
+                System.out.println("innnnnnnnn2222");
+                String studentCode = studenCode.substring(2);
+                System.out.println(studentCode);
+                ResultSet rset = AttendanceV3Controller.getByOneAttribute("student_code", CommonConstants.sql.LIKE, "%" + studentCode + "%");
+                String[] columnList = {"id", "att_date", "lec_code", "lecturer_name", "student_code", "student_name", "fee", "remark"};
+                CommonController.loadDataToTable(tblAttendanceV3, rset, columnList);
+            }
         } catch (SQLException ex) {
             Logger.getLogger(attendanceAndPayment.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -205,7 +229,7 @@ public class attendanceAndPayment extends javax.swing.JFrame {
         jLabel20 = new javax.swing.JLabel();
         txtClassFee = new javax.swing.JTextField();
         jLabel21 = new javax.swing.JLabel();
-        jCheckBox1 = new javax.swing.JCheckBox();
+        chkBoxMonthlyFee = new javax.swing.JCheckBox();
         jLabel24 = new javax.swing.JLabel();
         dateChooserFromDate = new com.toedter.calendar.JDateChooser();
         btSave1 = new javax.swing.JButton();
@@ -296,9 +320,9 @@ public class attendanceAndPayment extends javax.swing.JFrame {
             tblAttendanceV3.getColumnModel().getColumn(6).setMinWidth(100);
             tblAttendanceV3.getColumnModel().getColumn(6).setPreferredWidth(100);
             tblAttendanceV3.getColumnModel().getColumn(6).setMaxWidth(100);
-            tblAttendanceV3.getColumnModel().getColumn(7).setMinWidth(0);
-            tblAttendanceV3.getColumnModel().getColumn(7).setPreferredWidth(0);
-            tblAttendanceV3.getColumnModel().getColumn(7).setMaxWidth(0);
+            tblAttendanceV3.getColumnModel().getColumn(7).setMinWidth(150);
+            tblAttendanceV3.getColumnModel().getColumn(7).setPreferredWidth(150);
+            tblAttendanceV3.getColumnModel().getColumn(7).setMaxWidth(150);
         }
 
         PanelMain.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 178, 1139, 187));
@@ -309,6 +333,14 @@ public class attendanceAndPayment extends javax.swing.JFrame {
         txtStudentCode.setToolTipText("");
         txtStudentCode.setSelectedTextColor(new java.awt.Color(0, 0, 0));
         txtStudentCode.setSelectionColor(new java.awt.Color(255, 255, 0));
+        txtStudentCode.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtStudentCodeKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtStudentCodeKeyTyped(evt);
+            }
+        });
 
         btSave.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
         btSave.setForeground(new java.awt.Color(255, 255, 255));
@@ -334,10 +366,10 @@ public class attendanceAndPayment extends javax.swing.JFrame {
         jLabel21.setForeground(new java.awt.Color(255, 255, 255));
         jLabel21.setText("Class Fee");
 
-        jCheckBox1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jCheckBox1.setForeground(new java.awt.Color(255, 255, 255));
-        jCheckBox1.setText("Monthly Fee");
-        jCheckBox1.setOpaque(false);
+        chkBoxMonthlyFee.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        chkBoxMonthlyFee.setForeground(new java.awt.Color(255, 255, 255));
+        chkBoxMonthlyFee.setText("Monthly Fee");
+        chkBoxMonthlyFee.setOpaque(false);
 
         javax.swing.GroupLayout PanelSubLayout = new javax.swing.GroupLayout(PanelSub);
         PanelSub.setLayout(PanelSubLayout);
@@ -357,7 +389,7 @@ public class attendanceAndPayment extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btSave, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jCheckBox1)
+                .addComponent(chkBoxMonthlyFee)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         PanelSubLayout.setVerticalGroup(
@@ -373,7 +405,7 @@ public class attendanceAndPayment extends javax.swing.JFrame {
                     .addGroup(PanelSubLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(txtStudentCode, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(txtClassFee, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jCheckBox1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(chkBoxMonthlyFee, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(21, Short.MAX_VALUE))
         );
 
@@ -765,6 +797,14 @@ public class attendanceAndPayment extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnEditActionPerformed
 
+    private void txtStudentCodeKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtStudentCodeKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtStudentCodeKeyTyped
+
+    private void txtStudentCodeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtStudentCodeKeyReleased
+        searchPaymentsByStudentCode(txtStudentCode.getText().trim());
+    }//GEN-LAST:event_txtStudentCodeKeyReleased
+
     /**
      * @param args the command line arguments
      */
@@ -810,6 +850,7 @@ public class attendanceAndPayment extends javax.swing.JFrame {
     private javax.swing.JButton btSave;
     private javax.swing.JButton btSave1;
     private javax.swing.JButton btnEdit;
+    private javax.swing.JCheckBox chkBoxMonthlyFee;
     private javax.swing.JComboBox<String> comboGrade2;
     private javax.swing.JComboBox<String> comboLecturerCodes1;
     private javax.swing.JComboBox<String> comboLecturerCodes2;
@@ -821,7 +862,6 @@ public class attendanceAndPayment extends javax.swing.JFrame {
     private com.toedter.calendar.JDateChooser dateClassDate;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
