@@ -79,18 +79,19 @@ public class userManagement extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblUsers = new javax.swing.JTable();
+        btnDelete = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("User Management");
         setAlwaysOnTop(true);
         setBackground(new java.awt.Color(102, 102, 255));
-        setMinimumSize(new java.awt.Dimension(645, 549));
+        setMaximumSize(new java.awt.Dimension(595, 390));
+        setMinimumSize(new java.awt.Dimension(595, 390));
         setResizable(false);
 
         panel.setMaximumSize(new java.awt.Dimension(1358, 766));
         panel.setMinimumSize(new java.awt.Dimension(1358, 766));
         panel.setPreferredSize(new java.awt.Dimension(1358, 766));
-        panel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         txtUname.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
         txtUname.setToolTipText("User Name");
@@ -104,10 +105,9 @@ public class userManagement extends javax.swing.JFrame {
                 txtUnameKeyReleased(evt);
             }
         });
-        panel.add(txtUname, new org.netbeans.lib.awtextra.AbsoluteConstraints(31, 59, 270, 40));
 
         comboType.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
-        comboType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Admin", "Manager", "User" }));
+        comboType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Admin", "User" }));
         comboType.setToolTipText("Type");
         comboType.addPopupMenuListener(new javax.swing.event.PopupMenuListener() {
             public void popupMenuCanceled(javax.swing.event.PopupMenuEvent evt) {
@@ -123,7 +123,6 @@ public class userManagement extends javax.swing.JFrame {
                 comboTypeActionPerformed(evt);
             }
         });
-        panel.add(comboType, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, 270, 40));
 
         txtPassword.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
         txtPassword.setToolTipText("Password");
@@ -137,7 +136,6 @@ public class userManagement extends javax.swing.JFrame {
                 txtPasswordKeyReleased(evt);
             }
         });
-        panel.add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 59, 280, 40));
 
         btAddUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/ttms/labelIcons2/saveIcon.png"))); // NOI18N
         btAddUser.setToolTipText("Add User");
@@ -146,22 +144,18 @@ public class userManagement extends javax.swing.JFrame {
                 btAddUserActionPerformed(evt);
             }
         });
-        panel.add(btAddUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 150, 100, 48));
 
         jLabel2.setFont(new java.awt.Font("Ubuntu Medium", 0, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 0, 102));
         jLabel2.setText("User Name");
-        panel.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(31, 31, -1, -1));
 
         jLabel3.setFont(new java.awt.Font("Ubuntu Medium", 0, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(0, 0, 102));
         jLabel3.setText("Password");
-        panel.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 31, -1, -1));
 
         jLabel7.setFont(new java.awt.Font("Ubuntu Medium", 0, 14)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(0, 0, 102));
-        jLabel7.setText("Type");
-        panel.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 120, -1, -1));
+        jLabel7.setText("User Category");
 
         tblUsers.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
         tblUsers.setModel(new javax.swing.table.DefaultTableModel(
@@ -198,17 +192,68 @@ public class userManagement extends javax.swing.JFrame {
             tblUsers.getColumnModel().getColumn(2).setMaxWidth(0);
         }
 
-        panel.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 220, 580, 290));
+        btnDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/ttms/labelIcons2/deleteIcon.png"))); // NOI18N
+        btnDelete.setToolTipText("Edit Student Details");
+
+        javax.swing.GroupLayout panelLayout = new javax.swing.GroupLayout(panel);
+        panel.setLayout(panelLayout);
+        panelLayout.setHorizontalGroup(
+            panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelLayout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jLabel7)
+                        .addComponent(comboType, 0, 270, Short.MAX_VALUE)
+                        .addComponent(jLabel2)
+                        .addComponent(txtUname)
+                        .addComponent(jLabel3)
+                        .addComponent(txtPassword))
+                    .addComponent(btAddUser, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        panelLayout.setVerticalGroup(
+            panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelLayout.createSequentialGroup()
+                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelLayout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addComponent(jLabel7)
+                        .addGap(13, 13, 13))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelLayout.createSequentialGroup()
+                        .addComponent(comboType, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)
+                        .addComponent(jLabel2)
+                        .addGap(13, 13, 13)
+                        .addComponent(txtUname, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)
+                        .addComponent(jLabel3)
+                        .addGap(13, 13, 13)
+                        .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btAddUser, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 645, Short.MAX_VALUE)
+            .addComponent(panel, javax.swing.GroupLayout.PREFERRED_SIZE, 595, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panel, javax.swing.GroupLayout.PREFERRED_SIZE, 537, Short.MAX_VALUE)
+            .addComponent(panel, javax.swing.GroupLayout.PREFERRED_SIZE, 390, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -297,6 +342,7 @@ public class userManagement extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btAddUser;
+    private javax.swing.JButton btnDelete;
     private javax.swing.JComboBox<String> comboType;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

@@ -11,6 +11,7 @@ import cazzendra.pos.core.CommonConstants;
 import cazzendra.pos.core.Loading;
 import cazzendra.pos.core.Validations;
 import cazzendra.pos.daoImpl.studentDaoImpl;
+import cazzendra.pos.model.User;
 import java.awt.Color;
 import java.awt.Font;
 import java.sql.ResultSet;
@@ -31,6 +32,16 @@ public class manageStudents extends javax.swing.JFrame {
         PanelMain.setBackground(Loading.getColorCode());
         PanelSub.setBackground(Loading.getColorCode());
         setNextIdAndQrCode();
+        featureManagement();
+    }
+
+    private void featureManagement() {
+        User user = Loading.getUser();
+        if ("User".equalsIgnoreCase(user.getType())) {
+            btStudentAddressPrintReport.setVisible(false);
+            btAllStudents.setVisible(false);
+            btViewStudentDetails.setVisible(false);
+        }
     }
 
     private void setNextIdAndQrCode() {
@@ -64,12 +75,10 @@ public class manageStudents extends javax.swing.JFrame {
 //            JOptionPane.showMessageDialog(this, "Please enter student Date Of Birth !", "Error", JOptionPane.ERROR_MESSAGE);
 //            return;
 //        }
-
 //        if (txtContactNo.getText().trim().equalsIgnoreCase(null) || txtContactNo.getText().trim().equalsIgnoreCase("")) {
 //            JOptionPane.showMessageDialog(this, "Please enter student Contact No !", "Error", JOptionPane.ERROR_MESSAGE);
 //            return;
 //        }
-
         try {
             int option = JOptionPane.showConfirmDialog(this, "Are you sure you want to save this student details ?");
             if (option == JOptionPane.YES_OPTION) {

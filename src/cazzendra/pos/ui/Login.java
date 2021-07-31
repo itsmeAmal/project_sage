@@ -32,6 +32,7 @@ public class Login extends javax.swing.JFrame {
         lblTimeMonth.setText(now.getMonth().toString());
         lblCopyrightStatement.setText(Loading.getCopyrightStatement());
         comboLanguage.setVisible(false);
+        jButton1.setVisible(false);
     }
 
     private void login() {

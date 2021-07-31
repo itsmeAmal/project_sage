@@ -40,13 +40,12 @@ public class AuthenticateJDialog extends javax.swing.JDialog {
             String uname = txtUserName.getText();
             String pw = txtPwField.getText();
             boolean access = UserControl.getUserByUnameAndPw(uname, pw);
-            if (access) {
-                User user = UserControl.getUserByUserNameAndPw(uname, pw);
-                Loading.setUser(user);
+            User user = UserControl.getUserByUserNameAndPw(uname, pw);
+            if (access && user.getType().equalsIgnoreCase("Admin")) {
                 authenticated = true;
                 this.dispose();
             } else {
-                JOptionPane.showMessageDialog(this, "Username or Password is incorrect !", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Username or Password is incorrect or you are not authorized !", "Error", JOptionPane.ERROR_MESSAGE);
             }
         } catch (SQLException ex) {
             Logger.getLogger(AuthenticateJDialog.class.getName()).log(Level.SEVERE, null, ex);

@@ -7,6 +7,7 @@ package cazzendra.pos.ui;
 
 import cazzendra.pos.control.CommonController;
 import cazzendra.pos.core.Loading;
+import cazzendra.pos.model.User;
 import cazzendra.pos.model.student;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
@@ -49,6 +50,7 @@ public class MainMenuV3 extends javax.swing.JFrame {
         lblLoggedUser.setText(Loading.getUser().getUserName());
         lblCopyrightStatement.setText(Loading.getCopyrightStatement());
         HotKeys();
+        featureManagement();
     }
 
     private void HotKeys() {
@@ -59,6 +61,16 @@ public class MainMenuV3 extends javax.swing.JFrame {
             public void actionPerformed(ActionEvent e) {
             }
         });
+    }
+
+    private void featureManagement() {
+        User user = Loading.getUser();
+        if ("User".equalsIgnoreCase(user.getType())) {
+            pnlUsers.setVisible(false);
+            lblUsers.setVisible(false);
+            pnlReportAllStudents.setVisible(false);
+            pnlReportStudentsGradeWise.setVisible(false);
+        }
     }
 
     /**
@@ -93,12 +105,12 @@ public class MainMenuV3 extends javax.swing.JFrame {
         jPanel12 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        jPanel13 = new javax.swing.JPanel();
+        pnlUsers = new javax.swing.JPanel();
         jPanel14 = new javax.swing.JPanel();
         jLabel13 = new javax.swing.JLabel();
-        jPanel5 = new javax.swing.JPanel();
+        pnlReportAllStudents = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
-        jPanel6 = new javax.swing.JPanel();
+        pnlReportStudentsGradeWise = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         jPanel15 = new javax.swing.JPanel();
         lblDateTime = new javax.swing.JLabel();
@@ -108,7 +120,7 @@ public class MainMenuV3 extends javax.swing.JFrame {
         btnCloseApp = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
-        jLabel16 = new javax.swing.JLabel();
+        lblUsers = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -415,10 +427,10 @@ public class MainMenuV3 extends javax.swing.JFrame {
         jLabel12.setText("STUDENTS");
         panel.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 619, 170, -1));
 
-        jPanel13.setBackground(new java.awt.Color(0, 153, 153));
-        jPanel13.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jPanel13.setMaximumSize(new java.awt.Dimension(160, 160));
-        jPanel13.setMinimumSize(new java.awt.Dimension(160, 160));
+        pnlUsers.setBackground(new java.awt.Color(0, 153, 153));
+        pnlUsers.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        pnlUsers.setMaximumSize(new java.awt.Dimension(160, 160));
+        pnlUsers.setMinimumSize(new java.awt.Dimension(160, 160));
 
         jPanel14.setBackground(new java.awt.Color(0, 0, 102));
 
@@ -446,24 +458,24 @@ public class MainMenuV3 extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
-        jPanel13.setLayout(jPanel13Layout);
-        jPanel13Layout.setHorizontalGroup(
-            jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel13Layout.createSequentialGroup()
+        javax.swing.GroupLayout pnlUsersLayout = new javax.swing.GroupLayout(pnlUsers);
+        pnlUsers.setLayout(pnlUsersLayout);
+        pnlUsersLayout.setHorizontalGroup(
+            pnlUsersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlUsersLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        jPanel13Layout.setVerticalGroup(
-            jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel13Layout.createSequentialGroup()
+        pnlUsersLayout.setVerticalGroup(
+            pnlUsersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlUsersLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
-        panel.add(jPanel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(198, 231, -1, -1));
+        panel.add(pnlUsers, new org.netbeans.lib.awtextra.AbsoluteConstraints(198, 231, -1, -1));
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -474,24 +486,24 @@ public class MainMenuV3 extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
+        javax.swing.GroupLayout pnlReportAllStudentsLayout = new javax.swing.GroupLayout(pnlReportAllStudents);
+        pnlReportAllStudents.setLayout(pnlReportAllStudentsLayout);
+        pnlReportAllStudentsLayout.setHorizontalGroup(
+            pnlReportAllStudentsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlReportAllStudentsLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
+        pnlReportAllStudentsLayout.setVerticalGroup(
+            pnlReportAllStudentsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlReportAllStudentsLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
-        panel.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(1063, 291, 260, -1));
+        panel.add(pnlReportAllStudents, new org.netbeans.lib.awtextra.AbsoluteConstraints(1063, 291, 260, -1));
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -502,24 +514,24 @@ public class MainMenuV3 extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
-        jPanel6.setLayout(jPanel6Layout);
-        jPanel6Layout.setHorizontalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
+        javax.swing.GroupLayout pnlReportStudentsGradeWiseLayout = new javax.swing.GroupLayout(pnlReportStudentsGradeWise);
+        pnlReportStudentsGradeWise.setLayout(pnlReportStudentsGradeWiseLayout);
+        pnlReportStudentsGradeWiseLayout.setHorizontalGroup(
+            pnlReportStudentsGradeWiseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlReportStudentsGradeWiseLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE)
                 .addContainerGap())
         );
-        jPanel6Layout.setVerticalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
+        pnlReportStudentsGradeWiseLayout.setVerticalGroup(
+            pnlReportStudentsGradeWiseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlReportStudentsGradeWiseLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
-        panel.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(1063, 347, -1, -1));
+        panel.add(pnlReportStudentsGradeWise, new org.netbeans.lib.awtextra.AbsoluteConstraints(1063, 347, -1, -1));
 
         jPanel15.setBackground(new java.awt.Color(0, 51, 102));
         jPanel15.setForeground(new java.awt.Color(0, 0, 102));
@@ -609,11 +621,11 @@ public class MainMenuV3 extends javax.swing.JFrame {
         jLabel15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cazzendra/pos/ui/logo/sage_png_4.png"))); // NOI18N
         panel.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(1070, 540, 250, -1));
 
-        jLabel16.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel16.setForeground(new java.awt.Color(0, 0, 102));
-        jLabel16.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel16.setText("USERS");
-        panel.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(198, 411, 170, -1));
+        lblUsers.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lblUsers.setForeground(new java.awt.Color(0, 0, 102));
+        lblUsers.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblUsers.setText("USERS");
+        panel.add(lblUsers, new org.netbeans.lib.awtextra.AbsoluteConstraints(198, 411, 170, -1));
 
         jLabel17.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(0, 0, 102));
@@ -757,7 +769,6 @@ public class MainMenuV3 extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel25;
@@ -772,21 +783,22 @@ public class MainMenuV3 extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
-    private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel14;
     private javax.swing.JPanel jPanel15;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JLabel lblCopyrightStatement;
     private javax.swing.JLabel lblDateTime;
     private javax.swing.JLabel lblLoggedUser;
+    private javax.swing.JLabel lblUsers;
     private javax.swing.JLabel lblnamePriceUpdate2;
     private javax.swing.JPanel panel;
+    private javax.swing.JPanel pnlReportAllStudents;
+    private javax.swing.JPanel pnlReportStudentsGradeWise;
+    private javax.swing.JPanel pnlUsers;
     // End of variables declaration//GEN-END:variables
 }
