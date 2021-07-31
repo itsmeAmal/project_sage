@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="attended_student_report" language="groovy" pageWidth="595" pageHeight="900" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.2100000000000002"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="class_date" class="java.lang.String"/>
+	<parameter name="lec_code" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT * FROM attendance_v3 left join student on student_code=student_id where att_date=$P{class_date} and lec_code=$P{lec_code}]]>
+	</queryString>
+	<field name="id" class="java.lang.Long"/>
+	<field name="lec_code" class="java.lang.String"/>
+	<field name="student_code" class="java.lang.String"/>
+	<field name="att_date" class="java.sql.Date"/>
+	<field name="date_time" class="java.sql.Timestamp"/>
+	<field name="fee" class="java.math.BigDecimal"/>
+	<field name="remark" class="java.lang.String"/>
+	<field name="status" class="java.lang.String"/>
+	<field name="lecturer_name" class="java.lang.String"/>
+	<field name="student_name" class="java.lang.String"/>
+	<field name="student_id" class="java.lang.Long"/>
+	<field name="student_email_1" class="java.lang.String"/>
+	<field name="student_email_2" class="java.lang.String"/>
+	<field name="student_reg_no" class="java.lang.String"/>
+	<field name="student_contact_no" class="java.lang.String"/>
+	<field name="student_detail" class="java.lang.String"/>
+	<field name="student_status" class="java.lang.Boolean"/>
+	<field name="student_batch_id" class="java.lang.String"/>
+	<field name="student_group_id" class="java.lang.String"/>
+	<field name="student_special_id" class="java.lang.String"/>
+	<field name="student_address" class="java.lang.String"/>
+	<field name="student_contact_no_2" class="java.lang.String"/>
+	<field name="student_image_path" class="java.lang.String"/>
+	<field name="student_guardian_name" class="java.lang.String"/>
+	<field name="student_guardian_contact_no" class="java.lang.String"/>
+	<field name="student_dob" class="java.sql.Date"/>
+	<field name="student_grade" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="132" splitType="Stretch">
+			<staticText>
+				<reportElement x="7" y="9" width="545" height="24"/>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="15" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Attendance Sheet]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="7" y="111" width="89" height="20"/>
+				<textElement textAlignment="Left">
+					<font fontName="SansSerif" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Reg. No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="96" y="111" width="354" height="20"/>
+				<textElement textAlignment="Left">
+					<font fontName="SansSerif" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Student Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="7" y="44" width="57" height="20"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Date    ]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="64" y="44" width="154" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{class_date}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="7" y="84" width="57" height="20"/>
+				<textElement textAlignment="Left">
+					<font fontName="SansSerif" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Grade]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="64" y="84" width="154" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{lec_code}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="450" y="111" width="105" height="20"/>
+				<textElement textAlignment="Left">
+					<font fontName="SansSerif" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Contact]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="18" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="7" y="0" width="89" height="15" isPrintWhenDetailOverflows="true"/>
+				<textElement verticalAlignment="Top">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{student_reg_no}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="96" y="0" width="354" height="15" isPrintWhenDetailOverflows="true"/>
+				<textElement verticalAlignment="Top">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{student_name}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="450" y="0" width="102" height="15" isPrintWhenDetailOverflows="true"/>
+				<textElement verticalAlignment="Top">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{student_contact_no}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="36" splitType="Stretch"/>
+	</summary>
+</jasperReport>

@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="not_attended_student_report" language="groovy" pageWidth="900" pageHeight="595" orientation="Landscape" columnWidth="860" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
-	<property name="ireport.zoom" value="1.2100000000000002"/>
+	<property name="ireport.zoom" value="1.4641000000000013"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="class_date" class="java.lang.String"/>
 	<parameter name="grade" class="java.lang.String"/>
+	<parameter name="lec_code" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[SELECT * FROM student where student_id not in
-(select student_code from attendance_v3 where att_date=$P{class_date})]]>
+		<![CDATA[select * from student where student_grade=$P{grade} and student_id not in (select student_code
+from attendance_v3 where att_date=$P{class_date} and lec_code=$P{lec_code})]]>
 	</queryString>
 	<field name="student_id" class="java.lang.Long"/>
 	<field name="student_name" class="java.lang.String"/>
@@ -28,79 +29,150 @@
 	<field name="student_dob" class="java.sql.Date"/>
 	<field name="student_grade" class="java.lang.String"/>
 	<variable name="student_count" class="java.lang.Integer" calculation="Count">
-		<variableExpression><![CDATA[$F{student_name}]]></variableExpression>
+		<variableExpression><![CDATA[$F{student_id}]]></variableExpression>
 	</variable>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="118" splitType="Stretch">
+		<band height="131" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="9" width="860" height="24"/>
-				<textElement textAlignment="Center">
+				<reportElement x="7" y="9" width="427" height="24"/>
+				<textElement textAlignment="Left">
 					<font fontName="SansSerif" size="15" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Not attended student report]]></text>
+				<text><![CDATA[NOT ATTENDED STUDENT REPORT]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="7" y="98" width="54" height="20"/>
-				<textElement textAlignment="Left">
+				<reportElement mode="Opaque" x="7" y="111" width="101" height="20" backcolor="#00CCCC"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="SansSerif" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Reg. No]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="61" y="98" width="215" height="20"/>
-				<textElement textAlignment="Left">
+				<reportElement mode="Opaque" x="108" y="111" width="337" height="20" backcolor="#00CCCC"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="SansSerif" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Student Name]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="276" y="98" width="105" height="20"/>
-				<textElement textAlignment="Left">
+				<reportElement mode="Opaque" x="445" y="111" width="131" height="20" backcolor="#00CCCC"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="SansSerif" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Contact]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="383" y="98" width="324" height="20"/>
-				<textElement textAlignment="Left">
+				<reportElement mode="Opaque" x="576" y="111" width="273" height="20" backcolor="#00CCCC"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="SansSerif" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Address]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="7" y="64" width="57" height="20"/>
+				<reportElement x="7" y="44" width="119" height="20"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font fontName="SansSerif" size="12" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Count  :]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="7" y="44" width="57" height="20"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font fontName="SansSerif" size="12" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Date    : ]]></text>
+				<text><![CDATA[CLASS DATE]]></text>
 			</staticText>
 			<textField pattern="dd/MM/yyyy">
-				<reportElement x="64" y="44" width="154" height="20"/>
+				<reportElement x="131" y="44" width="190" height="20"/>
+				<box leftPadding="4"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$P{class_date}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="707" y="98" width="141" height="20"/>
-				<textElement textAlignment="Left">
+				<reportElement x="126" y="44" width="5" height="20"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font fontName="SansSerif" size="12" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Grade]]></text>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="7" y="84" width="119" height="20"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[LECTURER CODE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="126" y="84" width="5" height="20"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="64" y="64" width="154" height="20"/>
+				<reportElement x="131" y="84" width="190" height="20"/>
+				<box leftPadding="4"/>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$V{student_count}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{lec_code}]]></textFieldExpression>
 			</textField>
+			<staticText>
+				<reportElement x="126" y="64" width="5" height="20"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="7" y="64" width="119" height="20"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[GRADE]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="131" y="64" width="190" height="20"/>
+				<box leftPadding="4"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{grade}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="634" y="9" width="215" height="55"/>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="40" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SAGE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="634" y="55" width="215" height="24"/>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="15" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Kekirawa]]></text>
+			</staticText>
 		</band>
 	</title>
 	<pageHeader>
@@ -110,41 +182,46 @@
 		<band splitType="Stretch"/>
 	</columnHeader>
 	<detail>
-		<band height="18" splitType="Stretch">
+		<band height="15" splitType="Stretch">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement x="7" y="0" width="54" height="15" isPrintWhenDetailOverflows="true"/>
+				<reportElement x="7" y="0" width="101" height="15" isPrintWhenDetailOverflows="true"/>
+				<box leftPadding="5">
+					<bottomPen lineWidth="0.25"/>
+				</box>
 				<textElement verticalAlignment="Top">
 					<font size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{student_reg_no}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement x="61" y="0" width="215" height="15" isPrintWhenDetailOverflows="true"/>
+				<reportElement x="108" y="0" width="337" height="15" isPrintWhenDetailOverflows="true"/>
+				<box leftPadding="5">
+					<bottomPen lineWidth="0.25"/>
+				</box>
 				<textElement verticalAlignment="Top">
 					<font size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{student_name}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement x="276" y="0" width="105" height="15" isPrintWhenDetailOverflows="true"/>
+				<reportElement x="445" y="0" width="131" height="15" isPrintWhenDetailOverflows="true"/>
+				<box leftPadding="5">
+					<bottomPen lineWidth="0.25"/>
+				</box>
 				<textElement verticalAlignment="Top">
 					<font size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{student_contact_no}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement x="383" y="0" width="324" height="15" isPrintWhenDetailOverflows="true"/>
+				<reportElement x="576" y="0" width="273" height="15" isPrintWhenDetailOverflows="true"/>
+				<box leftPadding="5">
+					<bottomPen lineWidth="0.25"/>
+				</box>
 				<textElement verticalAlignment="Top">
 					<font size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{student_special_id}]]></textFieldExpression>
-			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement x="707" y="0" width="141" height="15" isPrintWhenDetailOverflows="true"/>
-				<textElement verticalAlignment="Top">
-					<font size="10"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{student_grade}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
@@ -154,7 +231,44 @@
 	<pageFooter>
 		<band splitType="Stretch"/>
 	</pageFooter>
+	<lastPageFooter>
+		<band height="18">
+			<staticText>
+				<reportElement x="7" y="4" width="842" height="12"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Software by Cloud Revel Technologies  |    cloudrevel.info     |      support@cloudrevel.info]]></text>
+			</staticText>
+		</band>
+	</lastPageFooter>
 	<summary>
-		<band height="68" splitType="Stretch"/>
+		<band height="48" splitType="Stretch">
+			<textField>
+				<reportElement x="742" y="15" width="107" height="20"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{student_count}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="618" y="15" width="119" height="20"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[STUDENT COUNT ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="737" y="15" width="5" height="20"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+		</band>
 	</summary>
 </jasperReport>

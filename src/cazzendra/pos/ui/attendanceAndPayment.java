@@ -101,11 +101,8 @@ public class attendanceAndPayment extends javax.swing.JFrame {
 
     private void searchPaymentsByStudentCode(String studenCode) {
         try {
-            System.out.println("innnnnnnnn11111111111");
             if ((txtStudentCode.getText().trim().length() > 3)) {
-                System.out.println("innnnnnnnn2222");
                 String studentCode = studenCode.substring(2);
-                System.out.println(studentCode);
                 ResultSet rset = AttendanceV3Controller.getByOneAttribute("student_code", CommonConstants.sql.LIKE, "%" + studentCode + "%");
                 String[] columnList = {"id", "att_date", "lec_code", "lecturer_name", "student_code", "student_name", "fee", "remark"};
                 CommonController.loadDataToTable(tblAttendanceV3, rset, columnList);
