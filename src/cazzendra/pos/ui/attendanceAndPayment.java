@@ -18,6 +18,7 @@ import java.awt.Font;
 import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -57,7 +58,7 @@ public class attendanceAndPayment extends javax.swing.JFrame {
         loadLecturerCodeForSearchFilters();
         loadLecturerCode2();
         loadLecturerCode3();
-
+        loadLecturerCode4();
     }
 
     private void clearAll() {
@@ -206,6 +207,15 @@ public class attendanceAndPayment extends javax.swing.JFrame {
         }
     }
 
+    private void loadLecturerCode4() {
+        try {
+            ResultSet rset = lecturerController.getAllLecturers();
+            CommonController.loadDataToComboBox(comboLecturerCodes4, rset, "lecturer_prefix_code");
+        } catch (SQLException ex) {
+            Logger.getLogger(attendanceAndPayment.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     private void loadLecturerCodeForSearchFilters() {
         try {
             ResultSet rset = lecturerController.getAllLecturers();
@@ -265,6 +275,14 @@ public class attendanceAndPayment extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         btNotAttendedReport = new javax.swing.JButton();
         comboGrade2 = new javax.swing.JComboBox<>();
+        jPanel6 = new javax.swing.JPanel();
+        jLabel11 = new javax.swing.JLabel();
+        dateChooserFromDate4 = new com.toedter.calendar.JDateChooser();
+        jLabel12 = new javax.swing.JLabel();
+        txtCommissionRate4 = new javax.swing.JTextField();
+        jLabel13 = new javax.swing.JLabel();
+        comboLecturerCodes4 = new javax.swing.JComboBox<>();
+        jButton4 = new javax.swing.JButton();
         btnEdit = new javax.swing.JButton();
         jLabel29 = new javax.swing.JLabel();
         lblMonthAndYear = new javax.swing.JLabel();
@@ -489,7 +507,7 @@ public class attendanceAndPayment extends javax.swing.JFrame {
         comboLecturerCodes3.setForeground(new java.awt.Color(0, 0, 102));
 
         jButton3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jButton3.setText("<html><center>Print Lecturer Commission Report</center></html>");
+        jButton3.setText("<html><center>Day Fee Commission Report</center></html>");
         jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -533,7 +551,7 @@ public class attendanceAndPayment extends javax.swing.JFrame {
                 .addComponent(comboLecturerCodes3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(6, 6, 6)
                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel3.setBackground(new java.awt.Color(0, 153, 153));
@@ -585,7 +603,7 @@ public class attendanceAndPayment extends javax.swing.JFrame {
                 .addComponent(comboLecturerCodes2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(19, 19, 19))
+                .addContainerGap())
         );
 
         jPanel4.setBackground(new java.awt.Color(0, 153, 153));
@@ -654,6 +672,78 @@ public class attendanceAndPayment extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jPanel6.setBackground(new java.awt.Color(0, 153, 153));
+
+        jLabel11.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel11.setText("Month");
+
+        dateChooserFromDate4.setDateFormatString("MMM , yyyy");
+
+        jLabel12.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel12.setText("Commission Rate ( % )");
+
+        txtCommissionRate4.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
+        txtCommissionRate4.setToolTipText("");
+        txtCommissionRate4.setSelectedTextColor(new java.awt.Color(0, 0, 0));
+        txtCommissionRate4.setSelectionColor(new java.awt.Color(255, 255, 0));
+
+        jLabel13.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel13.setText("Lecturer Code");
+
+        comboLecturerCodes4.setFont(new java.awt.Font("Ubuntu Medium", 0, 18)); // NOI18N
+        comboLecturerCodes4.setForeground(new java.awt.Color(0, 0, 102));
+
+        jButton4.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jButton4.setText("<html><center>Monthly Fee Commission Report</center></html>");
+        jButton4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGap(1, 1, 1)
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(comboLecturerCodes4, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(dateChooserFromDate4, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtCommissionRate4, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(6, 6, 6)
+                .addComponent(dateChooserFromDate4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel12)
+                .addGap(7, 7, 7)
+                .addComponent(txtCommissionRate4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(12, 12, 12)
+                .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(6, 6, 6)
+                .addComponent(comboLecturerCodes4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(6, 6, 6)
+                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -662,13 +752,15 @@ public class attendanceAndPayment extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
                     .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 485, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 250, Short.MAX_VALUE)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(41, 41, 41))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -679,6 +771,7 @@ public class attendanceAndPayment extends javax.swing.JFrame {
                 .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         btnEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/ttms/labelIcons2/editIcon.png"))); // NOI18N
@@ -826,7 +919,7 @@ public class attendanceAndPayment extends javax.swing.JFrame {
                                     .addComponent(jLabel26, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel28)
                                     .addComponent(txtFeeTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
                                 .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(3, 3, 3)
                         .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -931,6 +1024,24 @@ public class attendanceAndPayment extends javax.swing.JFrame {
         searchPaymentsByStudentCode(txtStudentCode.getText().trim());
     }//GEN-LAST:event_txtStudentCodeKeyReleased
 
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        if (dateChooserFromDate4.getDate() != null) {
+            try {
+                HashMap<String, Object> hm = new HashMap<>();
+                hm.put("class_date", Validations.getSqlDateByUtilDate(dateChooserFromDate4.getDate()));
+                hm.put("lecturer_code", comboLecturerCodes4.getSelectedItem().toString());
+                hm.put("commission_rate", Validations.getBigDecimalOrZeroFromString(txtCommissionRate4.getText().trim()));
+                SimpleDateFormat sdf = new SimpleDateFormat("MMMM");
+                hm.put("pay_month", sdf.format(Validations.getSqlDateByUtilDate(dateChooserFromDate4.getDate())));
+                SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy");
+                hm.put("pay_year", sdf2.format(Validations.getSqlDateByUtilDate(dateChooserFromDate4.getDate())));
+                CommonController.printCommonReport("lecturer_comission_report_monthly", hm);
+            } catch (SQLException | JRException ex) {
+                Logger.getLogger(attendanceAndPayment.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_jButton4ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -981,16 +1092,22 @@ public class attendanceAndPayment extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> comboLecturerCodes1;
     private javax.swing.JComboBox<String> comboLecturerCodes2;
     private javax.swing.JComboBox<String> comboLecturerCodes3;
+    private javax.swing.JComboBox<String> comboLecturerCodes4;
     private javax.swing.JComboBox<String> comboLecturerPrefixCode;
     private com.toedter.calendar.JDateChooser dateChooserFromDate;
     private com.toedter.calendar.JDateChooser dateChooserFromDate2;
     private com.toedter.calendar.JDateChooser dateChooserFromDate3;
+    private com.toedter.calendar.JDateChooser dateChooserFromDate4;
     private com.toedter.calendar.JDateChooser dateChooserPaymentDate;
     private com.toedter.calendar.JDateChooser dateClassDate;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
@@ -1012,6 +1129,7 @@ public class attendanceAndPayment extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel lblMonthAndYear;
@@ -1019,6 +1137,7 @@ public class attendanceAndPayment extends javax.swing.JFrame {
     private javax.swing.JTextField txtAttendedStudentCount;
     private javax.swing.JTextField txtClassFee;
     private javax.swing.JTextField txtCommissionRate3;
+    private javax.swing.JTextField txtCommissionRate4;
     private javax.swing.JTextField txtFeeTotal;
     private javax.swing.JTextField txtStudentCode;
     // End of variables declaration//GEN-END:variables
