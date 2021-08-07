@@ -47,8 +47,8 @@ public class AttendanceV3Controller {
         return new AttendanceV3DaoImpl().getByMoreAttributes(attributeConditionValueList, Operator);
     }
 
-    public boolean updatePayment(int paymentId, BigDecimal paymentAmount) throws SQLException {
-        return new AttendanceV3DaoImpl().updatePayment(paymentId, paymentAmount);
+    public boolean updatePayment(int paymentId, BigDecimal paymentAmount, Date paymentDate) throws SQLException {
+        return new AttendanceV3DaoImpl().updatePayment(paymentId, paymentAmount, paymentDate);
     }
 
     public static attendanceV3 getPaymentById(int id) throws SQLException {

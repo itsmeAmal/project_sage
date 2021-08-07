@@ -10,6 +10,7 @@ import cazzendra.pos.dao.AttendanceV3Dao;
 import cazzendra.pos.model.attendanceV3;
 import java.math.BigDecimal;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -67,11 +68,12 @@ public class AttendanceV3DaoImpl implements AttendanceV3Dao {
     }
 
     @Override
-    public boolean updatePayment(int paymentId, BigDecimal paymentAmount) throws SQLException {
+    public boolean updatePayment(int paymentId, BigDecimal paymentAmount, Date date) throws SQLException {
         Connection con = DatabaseConnection.getDatabaseConnection();
-        PreparedStatement ps = con.prepareStatement("update attendance_v3 set fee=? where id=?");
+        PreparedStatement ps = con.prepareStatement("update attendance_v3 set fee=?, att_date=? where id=?");
         ps.setBigDecimal(1, paymentAmount);
-        ps.setInt(2, paymentId);
+        ps.setDate(2, date);
+        ps.setInt(3, paymentId); 
         ps.executeUpdate();
         ps.close();
         return true;

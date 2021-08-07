@@ -67,7 +67,7 @@ public class attendanceAndPayment extends javax.swing.JFrame {
     private void featureManagement() {
         User user = Loading.getUser();
         if ("User".equalsIgnoreCase(user.getType())) {
-          
+
         }
     }
 
@@ -76,6 +76,11 @@ public class attendanceAndPayment extends javax.swing.JFrame {
         txtStudentCode.setText("");
         chkBoxMonthlyFee.setSelected(false);
         dateChooserPaymentDate.setDate(CommonController.getCurrentJavaSqlDate());
+        lblStudentName.setText(null);
+        lblAddress.setText(null);
+        lblContact.setText(null);
+        lblGuardianName.setText(null);
+        lblGuardianContact.setText(null);
     }
 
     private void markAttendanceByCode(String studenCode) {
@@ -121,8 +126,23 @@ public class attendanceAndPayment extends javax.swing.JFrame {
         try {
             if ((txtStudentCode.getText().trim().length() > 3)) {
                 String studentCode = studenCode.substring(2);
+                student student = studentController.getStudentByStudentId(Validations.getIntOrZeroFromString(studentCode));
+                if (null == student) {
+                    lblStudentName.setText(null);
+                    lblAddress.setText(null);
+                    lblContact.setText(null);
+                    lblGuardianName.setText(null);
+                    lblGuardianContact.setText(null);
+                } else {
+                    lblStudentName.setText(student.getName());
+                    lblAddress.setText(student.getCurrentAddress());
+                    lblContact.setText(student.getContactNo());
+                    lblGuardianName.setText(student.getGuardianName());
+                    lblGuardianContact.setText(student.getGuardianContact());
+                }
+
                 ResultSet rset = AttendanceV3Controller.getByOneAttribute("student_code", CommonConstants.sql.LIKE, "%" + studentCode + "%");
-                String[] columnList = {"id", "att_date", "lec_code", "lecturer_name", "student_code", "student_name", "fee", "remark"};
+                String[] columnList = {"id", "att_date","date_time" ,"lec_code", "lecturer_name", "student_code", "student_name", "fee", "remark"};
                 CommonController.loadDataToTable(tblAttendanceV3, rset, columnList);
             }
         } catch (SQLException ex) {
@@ -141,7 +161,7 @@ public class attendanceAndPayment extends javax.swing.JFrame {
             attributeConditionValueList.add(ACV2);
 
             ResultSet rset = AttendanceV3Controller.getByMoreAttributes(attributeConditionValueList, CommonConstants.sql.AND);
-            String[] columnList = {"id", "att_date", "lec_code", "lecturer_name", "student_code", "student_name", "fee", "remark"};
+            String[] columnList = {"id", "att_date", "date_time",  "lec_code", "lecturer_name", "student_code", "student_name", "fee", "remark"};
             CommonController.loadDataToTable(tblAttendanceV3, rset, columnList);
         } catch (SQLException ex) {
             Logger.getLogger(attendanceAndPayment.class.getName()).log(Level.SEVERE, null, ex);
@@ -178,7 +198,7 @@ public class attendanceAndPayment extends javax.swing.JFrame {
 
             ResultSet rset = AttendanceV3Controller.getByMoreAttributes(attributeConditionValueList, CommonConstants.sql.AND);
 
-            String[] columnList = {"id", "att_date", "lec_code", "lecturer_name", "student_code", "student_name", "fee", "remark"};
+            String[] columnList = {"id", "att_date","date_time" ,"lec_code", "lecturer_name", "student_code", "student_name", "fee", "remark"};
             CommonController.loadDataToTable(tblAttendanceV3, rset, columnList);
 
             txtAttendedStudentCount.setText(Integer.toString(tblAttendanceV3.getRowCount()));
@@ -256,6 +276,16 @@ public class attendanceAndPayment extends javax.swing.JFrame {
         chkBoxMonthlyFee = new javax.swing.JCheckBox();
         dateChooserPaymentDate = new com.toedter.calendar.JDateChooser();
         jLabel25 = new javax.swing.JLabel();
+        jLabel22 = new javax.swing.JLabel();
+        jLabel23 = new javax.swing.JLabel();
+        jLabel30 = new javax.swing.JLabel();
+        jLabel31 = new javax.swing.JLabel();
+        jLabel32 = new javax.swing.JLabel();
+        lblStudentName = new javax.swing.JLabel();
+        lblAddress = new javax.swing.JLabel();
+        lblContact = new javax.swing.JLabel();
+        lblGuardianName = new javax.swing.JLabel();
+        lblGuardianContact = new javax.swing.JLabel();
         jLabel26 = new javax.swing.JLabel();
         jLabel28 = new javax.swing.JLabel();
         txtFeeTotal = new javax.swing.JTextField();
@@ -296,21 +326,24 @@ public class attendanceAndPayment extends javax.swing.JFrame {
         btnEdit = new javax.swing.JButton();
         jLabel29 = new javax.swing.JLabel();
         lblMonthAndYear = new javax.swing.JLabel();
-        jPanel5 = new javax.swing.JPanel();
         jLabel24 = new javax.swing.JLabel();
         dateChooserFromDate = new com.toedter.calendar.JDateChooser();
         jLabel27 = new javax.swing.JLabel();
         comboLecturerPrefixCode = new javax.swing.JComboBox<>();
         btSave1 = new javax.swing.JButton();
-        jSeparator1 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Attendance & Payment");
-        setMaximumSize(new java.awt.Dimension(1159, 664));
-        setMinimumSize(new java.awt.Dimension(1159, 664));
+        setMaximumSize(new java.awt.Dimension(1316, 738));
+        setMinimumSize(new java.awt.Dimension(1316, 738));
+        setPreferredSize(new java.awt.Dimension(1316, 738));
         setResizable(false);
 
         PanelMain.setBackground(new java.awt.Color(0, 0, 102));
+        PanelMain.setMaximumSize(new java.awt.Dimension(1316, 704));
+        PanelMain.setMinimumSize(new java.awt.Dimension(1316, 704));
+        PanelMain.setPreferredSize(new java.awt.Dimension(1316, 704));
+        PanelMain.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         tblAttendanceV3.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
         tblAttendanceV3.getTableHeader().setFont(new Font("Ubuntu", Font.BOLD, 18));
@@ -322,11 +355,11 @@ public class attendanceAndPayment extends javax.swing.JFrame {
 
             },
             new String [] {
-                "id", "Date", "Lec. Code", "Lec. Name", "Stu. Code", "Stu. Name", "Fee", "Detail"
+                "id", "Payment For", "Paid Date", "Lec. Code", "Lec. Name", "Stu. Code", "Stu. Name", "Fee", "Detail"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -341,26 +374,29 @@ public class attendanceAndPayment extends javax.swing.JFrame {
             tblAttendanceV3.getColumnModel().getColumn(0).setMinWidth(0);
             tblAttendanceV3.getColumnModel().getColumn(0).setPreferredWidth(0);
             tblAttendanceV3.getColumnModel().getColumn(0).setMaxWidth(0);
-            tblAttendanceV3.getColumnModel().getColumn(1).setMinWidth(100);
-            tblAttendanceV3.getColumnModel().getColumn(1).setPreferredWidth(100);
-            tblAttendanceV3.getColumnModel().getColumn(1).setMaxWidth(100);
-            tblAttendanceV3.getColumnModel().getColumn(2).setMinWidth(100);
-            tblAttendanceV3.getColumnModel().getColumn(2).setPreferredWidth(100);
-            tblAttendanceV3.getColumnModel().getColumn(2).setMaxWidth(100);
-            tblAttendanceV3.getColumnModel().getColumn(3).setResizable(false);
-            tblAttendanceV3.getColumnModel().getColumn(4).setMinWidth(100);
-            tblAttendanceV3.getColumnModel().getColumn(4).setPreferredWidth(100);
-            tblAttendanceV3.getColumnModel().getColumn(4).setMaxWidth(100);
-            tblAttendanceV3.getColumnModel().getColumn(5).setResizable(false);
-            tblAttendanceV3.getColumnModel().getColumn(6).setMinWidth(100);
-            tblAttendanceV3.getColumnModel().getColumn(6).setPreferredWidth(100);
-            tblAttendanceV3.getColumnModel().getColumn(6).setMaxWidth(100);
-            tblAttendanceV3.getColumnModel().getColumn(7).setMinWidth(150);
-            tblAttendanceV3.getColumnModel().getColumn(7).setPreferredWidth(150);
-            tblAttendanceV3.getColumnModel().getColumn(7).setMaxWidth(150);
+            tblAttendanceV3.getColumnModel().getColumn(1).setMinWidth(150);
+            tblAttendanceV3.getColumnModel().getColumn(1).setPreferredWidth(150);
+            tblAttendanceV3.getColumnModel().getColumn(1).setMaxWidth(150);
+            tblAttendanceV3.getColumnModel().getColumn(3).setMinWidth(100);
+            tblAttendanceV3.getColumnModel().getColumn(3).setPreferredWidth(100);
+            tblAttendanceV3.getColumnModel().getColumn(3).setMaxWidth(100);
+            tblAttendanceV3.getColumnModel().getColumn(4).setResizable(false);
+            tblAttendanceV3.getColumnModel().getColumn(5).setMinWidth(100);
+            tblAttendanceV3.getColumnModel().getColumn(5).setPreferredWidth(100);
+            tblAttendanceV3.getColumnModel().getColumn(5).setMaxWidth(100);
+            tblAttendanceV3.getColumnModel().getColumn(6).setResizable(false);
+            tblAttendanceV3.getColumnModel().getColumn(7).setMinWidth(100);
+            tblAttendanceV3.getColumnModel().getColumn(7).setPreferredWidth(100);
+            tblAttendanceV3.getColumnModel().getColumn(7).setMaxWidth(100);
+            tblAttendanceV3.getColumnModel().getColumn(8).setMinWidth(150);
+            tblAttendanceV3.getColumnModel().getColumn(8).setPreferredWidth(150);
+            tblAttendanceV3.getColumnModel().getColumn(8).setMaxWidth(150);
         }
 
+        PanelMain.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 294, 1290, 140));
+
         PanelSub.setBackground(new java.awt.Color(0, 153, 153));
+        PanelSub.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         txtStudentCode.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
         txtStudentCode.setToolTipText("");
@@ -374,6 +410,7 @@ public class attendanceAndPayment extends javax.swing.JFrame {
                 txtStudentCodeKeyTyped(evt);
             }
         });
+        PanelSub.add(txtStudentCode, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 39, 251, 40));
 
         btSave.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
         btSave.setForeground(new java.awt.Color(255, 255, 255));
@@ -385,19 +422,23 @@ public class attendanceAndPayment extends javax.swing.JFrame {
                 btSaveActionPerformed(evt);
             }
         });
+        PanelSub.add(btSave, new org.netbeans.lib.awtextra.AbsoluteConstraints(781, 39, 67, 40));
 
         jLabel20.setFont(new java.awt.Font("Ubuntu Medium", 1, 14)); // NOI18N
         jLabel20.setForeground(new java.awt.Color(255, 255, 255));
         jLabel20.setText("Lecture Code and Student Code");
+        PanelSub.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 13, 251, -1));
 
         txtClassFee.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
         txtClassFee.setToolTipText("");
         txtClassFee.setSelectedTextColor(new java.awt.Color(0, 0, 0));
         txtClassFee.setSelectionColor(new java.awt.Color(255, 255, 0));
+        PanelSub.add(txtClassFee, new org.netbeans.lib.awtextra.AbsoluteConstraints(267, 39, 144, 40));
 
         jLabel21.setFont(new java.awt.Font("Ubuntu Medium", 1, 14)); // NOI18N
         jLabel21.setForeground(new java.awt.Color(255, 255, 255));
         jLabel21.setText("Class Fee");
+        PanelSub.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(267, 13, 144, -1));
 
         chkBoxMonthlyFee.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         chkBoxMonthlyFee.setForeground(new java.awt.Color(255, 255, 255));
@@ -405,94 +446,110 @@ public class attendanceAndPayment extends javax.swing.JFrame {
         chkBoxMonthlyFee.setToolTipText("Monthly Fee");
         chkBoxMonthlyFee.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
         chkBoxMonthlyFee.setOpaque(false);
+        PanelSub.add(chkBoxMonthlyFee, new org.netbeans.lib.awtextra.AbsoluteConstraints(417, 46, -1, -1));
 
         dateChooserPaymentDate.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        PanelSub.add(dateChooserPaymentDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(536, 39, 235, 40));
 
         jLabel25.setFont(new java.awt.Font("Ubuntu Medium", 1, 14)); // NOI18N
         jLabel25.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel25.setText("Payment Date");
+        jLabel25.setText("Payment For");
+        PanelSub.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(536, 11, 95, 20));
 
-        javax.swing.GroupLayout PanelSubLayout = new javax.swing.GroupLayout(PanelSub);
-        PanelSub.setLayout(PanelSubLayout);
-        PanelSubLayout.setHorizontalGroup(
-            PanelSubLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PanelSubLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(PanelSubLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(PanelSubLayout.createSequentialGroup()
-                        .addComponent(txtStudentCode, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(42, 42, 42)
-                        .addComponent(txtClassFee, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(PanelSubLayout.createSequentialGroup()
-                        .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btSave, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(chkBoxMonthlyFee)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(PanelSubLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel25)
-                    .addComponent(dateChooserPaymentDate, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
-        );
-        PanelSubLayout.setVerticalGroup(
-            PanelSubLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PanelSubLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(PanelSubLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(PanelSubLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel20)
-                        .addComponent(jLabel21))
-                    .addComponent(jLabel25, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(PanelSubLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(dateChooserPaymentDate, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(PanelSubLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(btSave, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(PanelSubLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtStudentCode, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtClassFee, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(chkBoxMonthlyFee, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap(21, Short.MAX_VALUE))
-        );
+        jLabel22.setFont(new java.awt.Font("Ubuntu Medium", 1, 14)); // NOI18N
+        jLabel22.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel22.setText("Student Name ");
+        PanelSub.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 85, 159, -1));
+
+        jLabel23.setFont(new java.awt.Font("Ubuntu Medium", 1, 14)); // NOI18N
+        jLabel23.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel23.setText("Contact No");
+        PanelSub.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 131, 159, -1));
+
+        jLabel30.setFont(new java.awt.Font("Ubuntu Medium", 1, 14)); // NOI18N
+        jLabel30.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel30.setText("Address");
+        PanelSub.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 108, 159, -1));
+
+        jLabel31.setFont(new java.awt.Font("Ubuntu Medium", 1, 14)); // NOI18N
+        jLabel31.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel31.setText("Guardian Contact No");
+        PanelSub.add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 177, 159, -1));
+
+        jLabel32.setFont(new java.awt.Font("Ubuntu Medium", 1, 14)); // NOI18N
+        jLabel32.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel32.setText("Guardian Name");
+        PanelSub.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 154, 159, -1));
+
+        lblStudentName.setFont(new java.awt.Font("Ubuntu Medium", 1, 14)); // NOI18N
+        lblStudentName.setForeground(new java.awt.Color(255, 255, 255));
+        lblStudentName.setText("n/a");
+        PanelSub.add(lblStudentName, new org.netbeans.lib.awtextra.AbsoluteConstraints(179, 85, 420, -1));
+
+        lblAddress.setFont(new java.awt.Font("Ubuntu Medium", 1, 14)); // NOI18N
+        lblAddress.setForeground(new java.awt.Color(255, 255, 255));
+        lblAddress.setText("n/a");
+        PanelSub.add(lblAddress, new org.netbeans.lib.awtextra.AbsoluteConstraints(179, 108, 420, -1));
+
+        lblContact.setFont(new java.awt.Font("Ubuntu Medium", 1, 14)); // NOI18N
+        lblContact.setForeground(new java.awt.Color(255, 255, 255));
+        lblContact.setText("n/a");
+        PanelSub.add(lblContact, new org.netbeans.lib.awtextra.AbsoluteConstraints(179, 131, 420, -1));
+
+        lblGuardianName.setFont(new java.awt.Font("Ubuntu Medium", 1, 14)); // NOI18N
+        lblGuardianName.setForeground(new java.awt.Color(255, 255, 255));
+        lblGuardianName.setText("n/a");
+        PanelSub.add(lblGuardianName, new org.netbeans.lib.awtextra.AbsoluteConstraints(179, 154, 420, -1));
+
+        lblGuardianContact.setFont(new java.awt.Font("Ubuntu Medium", 1, 14)); // NOI18N
+        lblGuardianContact.setForeground(new java.awt.Color(255, 255, 255));
+        lblGuardianContact.setText("n/a");
+        PanelSub.add(lblGuardianContact, new org.netbeans.lib.awtextra.AbsoluteConstraints(179, 177, 450, -1));
+
+        PanelMain.add(PanelSub, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 11, 1290, 200));
 
         jLabel26.setFont(new java.awt.Font("Ubuntu Medium", 1, 14)); // NOI18N
         jLabel26.setForeground(new java.awt.Color(255, 255, 255));
         jLabel26.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel26.setText("Student Count");
+        PanelMain.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(999, 446, -1, 20));
 
         jLabel28.setFont(new java.awt.Font("Ubuntu Medium", 1, 14)); // NOI18N
         jLabel28.setForeground(new java.awt.Color(255, 255, 255));
         jLabel28.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel28.setText("Fee Total ");
+        PanelMain.add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(999, 518, -1, -1));
 
         txtFeeTotal.setEditable(false);
         txtFeeTotal.setBackground(new java.awt.Color(0, 153, 153));
         txtFeeTotal.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         txtFeeTotal.setForeground(new java.awt.Color(255, 255, 255));
         txtFeeTotal.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        PanelMain.add(txtFeeTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(999, 541, 271, 40));
 
         txtAttendedStudentCount.setEditable(false);
         txtAttendedStudentCount.setBackground(new java.awt.Color(0, 153, 153));
         txtAttendedStudentCount.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         txtAttendedStudentCount.setForeground(new java.awt.Color(255, 255, 255));
         txtAttendedStudentCount.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        PanelMain.add(txtAttendedStudentCount, new org.netbeans.lib.awtextra.AbsoluteConstraints(999, 472, 271, 40));
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Attendance & Lecturer Commission Fee Report ", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(255, 255, 255))); // NOI18N
         jPanel1.setOpaque(false);
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 56)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel1.setText("SAGE");
         jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 17, -1, 51));
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel9.setText("KEKIRAWA");
+        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(26, 74, 129, 14));
 
         jPanel2.setBackground(new java.awt.Color(0, 153, 153));
 
@@ -564,6 +621,8 @@ public class attendanceAndPayment extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(565, 17, -1, -1));
+
         jPanel3.setBackground(new java.awt.Color(0, 153, 153));
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -611,10 +670,12 @@ public class attendanceAndPayment extends javax.swing.JFrame {
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(comboLecturerCodes2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
+
+        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(362, 17, -1, 233));
 
         jPanel4.setBackground(new java.awt.Color(0, 153, 153));
 
@@ -681,6 +742,8 @@ public class attendanceAndPayment extends javax.swing.JFrame {
                 .addComponent(btNotAttendedReport, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(159, 17, -1, -1));
 
         jPanel6.setBackground(new java.awt.Color(0, 153, 153));
 
@@ -754,35 +817,9 @@ public class attendanceAndPayment extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 250, Short.MAX_VALUE)
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(41, 41, 41))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-            .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-        );
+        jPanel1.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(769, 17, -1, -1));
+
+        PanelMain.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 440, 980, 270));
 
         btnEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/ttms/labelIcons2/editIcon.png"))); // NOI18N
         btnEdit.setToolTipText("Edit Student Details");
@@ -791,31 +828,35 @@ public class attendanceAndPayment extends javax.swing.JFrame {
                 btnEditActionPerformed(evt);
             }
         });
+        PanelMain.add(btnEdit, new org.netbeans.lib.awtextra.AbsoluteConstraints(1260, 230, 40, 40));
 
         jLabel29.setFont(new java.awt.Font("Ubuntu Medium", 1, 14)); // NOI18N
         jLabel29.setForeground(new java.awt.Color(255, 255, 255));
         jLabel29.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel29.setText("Payment Details :");
+        PanelMain.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(827, 246, 138, 24));
 
         lblMonthAndYear.setFont(new java.awt.Font("Ubuntu Medium", 1, 14)); // NOI18N
         lblMonthAndYear.setForeground(new java.awt.Color(255, 255, 255));
         lblMonthAndYear.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblMonthAndYear.setText("Month & Year");
-
-        jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Search Filters", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(255, 255, 255))); // NOI18N
-        jPanel5.setOpaque(false);
+        PanelMain.add(lblMonthAndYear, new org.netbeans.lib.awtextra.AbsoluteConstraints(975, 246, 245, 24));
 
         jLabel24.setFont(new java.awt.Font("Ubuntu Medium", 1, 14)); // NOI18N
         jLabel24.setForeground(new java.awt.Color(255, 255, 255));
         jLabel24.setText("Class Date");
+        PanelMain.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 230, -1, 20));
 
         dateChooserFromDate.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        PanelMain.add(dateChooserFromDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 250, 235, 40));
 
         jLabel27.setFont(new java.awt.Font("Ubuntu Medium", 1, 14)); // NOI18N
         jLabel27.setForeground(new java.awt.Color(255, 255, 255));
         jLabel27.setText("Lecturer");
+        PanelMain.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 230, -1, 20));
 
         comboLecturerPrefixCode.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        PanelMain.add(comboLecturerPrefixCode, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 250, 160, 40));
 
         btSave1.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
         btSave1.setForeground(new java.awt.Color(255, 255, 255));
@@ -827,127 +868,17 @@ public class attendanceAndPayment extends javax.swing.JFrame {
                 btSave1ActionPerformed(evt);
             }
         });
-
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel24)
-                    .addComponent(dateChooserFromDate, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addComponent(comboLecturerPrefixCode, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(10, 10, 10)
-                        .addComponent(btSave1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(2, 2, 2)
-                        .addComponent(jLabel27)))
-                .addGap(75, 75, 75))
-        );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel5Layout.createSequentialGroup()
-                            .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(0, 0, 0)
-                            .addComponent(dateChooserFromDate, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanel5Layout.createSequentialGroup()
-                            .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(0, 0, 0)
-                            .addComponent(comboLecturerPrefixCode, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(btSave1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(16, Short.MAX_VALUE))
-        );
-
-        javax.swing.GroupLayout PanelMainLayout = new javax.swing.GroupLayout(PanelMain);
-        PanelMain.setLayout(PanelMainLayout);
-        PanelMainLayout.setHorizontalGroup(
-            PanelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PanelMainLayout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(5, 10, Short.MAX_VALUE))
-            .addGroup(PanelMainLayout.createSequentialGroup()
-                .addGroup(PanelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(PanelSub, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(PanelMainLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(PanelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(PanelMainLayout.createSequentialGroup()
-                                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(PanelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(PanelMainLayout.createSequentialGroup()
-                                        .addGap(0, 0, Short.MAX_VALUE)
-                                        .addComponent(jLabel29, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(lblMonthAndYear, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(215, 215, 215)
-                                        .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(PanelMainLayout.createSequentialGroup()
-                                        .addComponent(jLabel26)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(txtAttendedStudentCount, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(52, 52, 52)
-                                        .addComponent(jLabel28)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(txtFeeTotal))
-                                    .addGroup(PanelMainLayout.createSequentialGroup()
-                                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 619, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(0, 0, Short.MAX_VALUE))))
-                            .addComponent(jScrollPane1))))
-                .addContainerGap())
-        );
-        PanelMainLayout.setVerticalGroup(
-            PanelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PanelMainLayout.createSequentialGroup()
-                .addGap(11, 11, 11)
-                .addComponent(PanelSub, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(PanelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(PanelMainLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(PanelMainLayout.createSequentialGroup()
-                        .addGroup(PanelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(PanelMainLayout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(PanelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(lblMonthAndYear, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel29, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(PanelMainLayout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(PanelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(txtAttendedStudentCount, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel26, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel28)
-                                    .addComponent(txtFeeTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
-                                .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(3, 3, 3)
-                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
+        PanelMain.add(btSave1, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 250, 70, 40));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(PanelMain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(PanelMain, javax.swing.GroupLayout.PREFERRED_SIZE, 1316, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(PanelMain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(PanelMain, javax.swing.GroupLayout.PREFERRED_SIZE, 724, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -1120,6 +1051,8 @@ public class attendanceAndPayment extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
@@ -1127,6 +1060,9 @@ public class attendanceAndPayment extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel30;
+    private javax.swing.JLabel jLabel31;
+    private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -1137,11 +1073,14 @@ public class attendanceAndPayment extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JLabel lblAddress;
+    private javax.swing.JLabel lblContact;
+    private javax.swing.JLabel lblGuardianContact;
+    private javax.swing.JLabel lblGuardianName;
     private javax.swing.JLabel lblMonthAndYear;
+    private javax.swing.JLabel lblStudentName;
     private javax.swing.JTable tblAttendanceV3;
     private javax.swing.JTextField txtAttendedStudentCount;
     private javax.swing.JTextField txtClassFee;

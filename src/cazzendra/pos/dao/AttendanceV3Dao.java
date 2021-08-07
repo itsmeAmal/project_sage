@@ -7,6 +7,7 @@ package cazzendra.pos.dao;
 
 import cazzendra.pos.model.attendanceV3;
 import java.math.BigDecimal;
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -26,6 +27,6 @@ public interface AttendanceV3Dao {
 
     public ResultSet getAllV3Records() throws SQLException;
     
-    public boolean updatePayment(int paymentId, BigDecimal paymentAmount)throws SQLException;
+    public boolean updatePayment(int paymentId, BigDecimal paymentAmount, Date paymentDate)throws SQLException;
 
 }

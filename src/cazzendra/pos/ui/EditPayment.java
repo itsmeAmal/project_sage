@@ -40,6 +40,7 @@ public class EditPayment extends javax.swing.JDialog {
         try {
             attendanceV3 = AttendanceV3Controller.getPaymentById(id);
             txtClassFee.setText(attendanceV3.getFee().toString());
+            dateChooserPaymentDate.setDate(attendanceV3.getDate()); 
         } catch (SQLException ex) {
             Logger.getLogger(EditPayment.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -48,7 +49,8 @@ public class EditPayment extends javax.swing.JDialog {
     private void updatePayment() {
         try {
             boolean successStatus = new AttendanceV3Controller().updatePayment(attendanceV3.getId(),
-                    Validations.getBigDecimalOrZeroFromString(txtClassFee.getText().trim()));
+                    Validations.getBigDecimalOrZeroFromString(txtClassFee.getText().trim()), 
+                    Validations.getSqlDateByUtilDate(dateChooserPaymentDate.getDate()));
 
             if (successStatus) {
                 JOptionPane.showMessageDialog(this, "Payment updated successfully.", "Success", JOptionPane.DEFAULT_OPTION);
@@ -74,11 +76,12 @@ public class EditPayment extends javax.swing.JDialog {
         btSave2 = new javax.swing.JButton();
         jLabel19 = new javax.swing.JLabel();
         txtClassFee = new javax.swing.JTextField();
+        jLabel26 = new javax.swing.JLabel();
+        dateChooserPaymentDate = new com.toedter.calendar.JDateChooser();
+        jLabel27 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Edit Payment");
-
-        PanelMain.setBackground(new java.awt.Color(0, 0, 102));
 
         btSave2.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
         btSave2.setForeground(new java.awt.Color(255, 255, 255));
@@ -100,6 +103,18 @@ public class EditPayment extends javax.swing.JDialog {
         txtClassFee.setSelectedTextColor(new java.awt.Color(0, 0, 0));
         txtClassFee.setSelectionColor(new java.awt.Color(255, 255, 0));
 
+        jLabel26.setFont(new java.awt.Font("Ubuntu Medium", 1, 14)); // NOI18N
+        jLabel26.setForeground(new java.awt.Color(0, 0, 102));
+        jLabel26.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel26.setText("Amount");
+
+        dateChooserPaymentDate.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+
+        jLabel27.setFont(new java.awt.Font("Ubuntu Medium", 1, 14)); // NOI18N
+        jLabel27.setForeground(new java.awt.Color(0, 0, 102));
+        jLabel27.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel27.setText("Payment Date");
+
         javax.swing.GroupLayout PanelMainLayout = new javax.swing.GroupLayout(PanelMain);
         PanelMain.setLayout(PanelMainLayout);
         PanelMainLayout.setHorizontalGroup(
@@ -113,19 +128,33 @@ public class EditPayment extends javax.swing.JDialog {
                         .addContainerGap()
                         .addComponent(jLabel19)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
-                        .addComponent(txtClassFee, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(PanelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel26, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtClassFee, javax.swing.GroupLayout.DEFAULT_SIZE, 234, Short.MAX_VALUE))))
                 .addContainerGap(45, Short.MAX_VALUE))
+            .addGroup(PanelMainLayout.createSequentialGroup()
+                .addGap(53, 53, 53)
+                .addGroup(PanelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel27, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(dateChooserPaymentDate, javax.swing.GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE))
+                .addContainerGap(44, Short.MAX_VALUE))
         );
         PanelMainLayout.setVerticalGroup(
             PanelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelMainLayout.createSequentialGroup()
-                .addGap(49, 49, 49)
+                .addGap(23, 23, 23)
+                .addComponent(jLabel26, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(PanelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtClassFee, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel19, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE))
-                .addGap(24, 24, 24)
+                    .addComponent(txtClassFee, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel19, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(5, 5, 5)
+                .addComponent(dateChooserPaymentDate, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
                 .addComponent(btSave2)
-                .addContainerGap(39, Short.MAX_VALUE))
+                .addGap(36, 36, 36))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -208,7 +237,10 @@ public class EditPayment extends javax.swing.JDialog {
     private javax.swing.JPanel PanelMain;
     private javax.swing.JButton btSave2;
     private javax.swing.ButtonGroup buttonGroup1;
+    private com.toedter.calendar.JDateChooser dateChooserPaymentDate;
     private javax.swing.JLabel jLabel19;
+    private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel27;
     private javax.swing.JTextField txtClassFee;
     // End of variables declaration//GEN-END:variables
 }
