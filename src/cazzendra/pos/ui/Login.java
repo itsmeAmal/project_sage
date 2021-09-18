@@ -32,7 +32,6 @@ public class Login extends javax.swing.JFrame {
         lblTimeMonth.setText(now.getMonth().toString());
         lblCopyrightStatement.setText(Loading.getCopyrightStatement());
         comboLanguage.setVisible(false);
-        jButton1.setVisible(false);
     }
 
     private void login() {
@@ -75,7 +74,6 @@ public class Login extends javax.swing.JFrame {
         lblLogin = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         txtPwField = new javax.swing.JPasswordField();
-        jButton1 = new javax.swing.JButton();
         lblTimeDay = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         lblTimeYear = new javax.swing.JLabel();
@@ -172,14 +170,6 @@ public class Login extends javax.swing.JFrame {
 
         panel.add(panelLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 50, 300, 280));
 
-        jButton1.setText("jButton1");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-        panel.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 400, -1, -1));
-
         lblTimeDay.setFont(new java.awt.Font("Arial Black", 0, 48)); // NOI18N
         lblTimeDay.setForeground(new java.awt.Color(0, 0, 102));
         lblTimeDay.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -247,10 +237,6 @@ public class Login extends javax.swing.JFrame {
 
     }//GEN-LAST:event_lblLoginFocusGained
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        new test_().setVisible(true);
-    }//GEN-LAST:event_jButton1ActionPerformed
-
     /**
      * @param args the command line arguments
      */
@@ -290,7 +276,6 @@ public class Login extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> comboLanguage;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
