@@ -7,7 +7,7 @@
 	<parameter name="lecturer_code" class="java.lang.String"/>
 	<parameter name="grade" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[select * from attendance_v3 left join student on student_id=student_code where att_date=$P{class_date} and lec_code=$P{lecturer_code} and student_grade=$P{grade}]]>
+		<![CDATA[select * from attendance_v3 left join student on student_id=student_code where att_date=$P{class_date} and student_grade=$P{grade}]]>
 	</queryString>
 	<field name="id" class="java.lang.Long"/>
 	<field name="lec_code" class="java.lang.String"/>
@@ -40,7 +40,7 @@
 		<variableExpression><![CDATA[$F{student_id}]]></variableExpression>
 	</variable>
 	<variable name="total_fee_amount" class="java.math.BigDecimal" calculation="Sum">
-		<variableExpression><![CDATA[]]></variableExpression>
+		<variableExpression><![CDATA[$F{fee}]]></variableExpression>
 	</variable>
 	<background>
 		<band splitType="Stretch"/>
@@ -128,7 +128,7 @@
 				<textElement verticalAlignment="Middle">
 					<font size="10"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{lec_code}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{lecturer_code}]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
 				<reportElement x="146" y="59" width="163" height="20"/>
@@ -210,16 +210,19 @@
 	<summary>
 		<band height="47" splitType="Stretch">
 			<staticText>
-				<reportElement x="346" y="5" width="117" height="16"/>
+				<reportElement x="314" y="5" width="117" height="16"/>
 				<textElement textAlignment="Right">
 					<font fontName="SansSerif" size="12" isBold="false"/>
 				</textElement>
 				<text><![CDATA[AMOUNT TOTAL]]></text>
 			</staticText>
 			<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-				<reportElement x="469" y="5" width="77" height="16"/>
+				<reportElement mode="Opaque" x="431" y="5" width="115" height="16" backcolor="#CCCCCC"/>
 				<box rightPadding="4">
-					<topPen lineWidth="0.75"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
 				</box>
 				<textElement textAlignment="Right">
 					<font size="12" isBold="true"/>
@@ -227,16 +230,19 @@
 				<textFieldExpression><![CDATA[$V{total_fee_amount}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="346" y="22" width="117" height="16"/>
+				<reportElement x="314" y="22" width="117" height="16"/>
 				<textElement textAlignment="Right">
 					<font fontName="SansSerif" size="12" isBold="false"/>
 				</textElement>
 				<text><![CDATA[STUDENT COUNT]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="469" y="22" width="77" height="16"/>
+				<reportElement mode="Opaque" x="431" y="22" width="115" height="16" backcolor="#CCCCCC"/>
 				<box rightPadding="4">
-					<bottomPen lineWidth="0.75"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
 				</box>
 				<textElement textAlignment="Right">
 					<font size="12" isBold="true"/>

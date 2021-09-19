@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="attendance_report_by_date" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
-	<property name="ireport.zoom" value="2.657341500000001"/>
+	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="201"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="class_date" class="java.util.Date"/>
 	<parameter name="lecturer_code" class="java.lang.String"/>
-	<parameter name="grade" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[select * from attendance_v3 left join student on student_id=student_code where att_date=$P{class_date}]]>
+		<![CDATA[select * from attendance_v3 left join student on student_id=student_code where att_date=$P{class_date} and lec_code=$P{lecturer_code}]]>
 	</queryString>
 	<field name="id" class="java.lang.Long"/>
 	<field name="lec_code" class="java.lang.String"/>
@@ -46,7 +45,7 @@
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="135" splitType="Stretch">
+		<band height="111" splitType="Stretch">
 			<staticText>
 				<reportElement x="8" y="9" width="301" height="24"/>
 				<textElement textAlignment="Left">
@@ -55,7 +54,7 @@
 				<text><![CDATA[ATTENDANCE AND PAYMENT REPORT]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="8" y="111" width="378" height="20" backcolor="#00CCCC"/>
+				<reportElement mode="Opaque" x="8" y="88" width="378" height="20" backcolor="#00CCCC"/>
 				<box topPadding="0" leftPadding="4" rightPadding="4">
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -68,7 +67,7 @@
 				<text><![CDATA[Student Name]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="386" y="111" width="160" height="20" backcolor="#00CCCC"/>
+				<reportElement mode="Opaque" x="386" y="88" width="160" height="20" backcolor="#00CCCC"/>
 				<box topPadding="0" leftPadding="4" rightPadding="4">
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -81,14 +80,28 @@
 				<text><![CDATA[Paid Amount]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="7" y="60" width="134" height="20"/>
+				<reportElement x="7" y="38" width="134" height="20"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[LECTURER CODE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="7" y="59" width="134" height="20"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font fontName="SansSerif" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[CLASS DATE]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="141" y="60" width="5" height="20"/>
+				<reportElement x="141" y="38" width="5" height="20"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="141" y="59" width="5" height="20"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font fontName="SansSerif" size="12" isBold="true"/>
 				</textElement>
@@ -108,55 +121,21 @@
 				</textElement>
 				<text><![CDATA[Kekirawa]]></text>
 			</staticText>
-			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
-				<reportElement x="146" y="60" width="163" height="20"/>
-				<box leftPadding="4"/>
-				<textElement verticalAlignment="Middle">
-					<font size="10"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{att_date}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="8" y="80" width="134" height="20"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font fontName="SansSerif" size="12" isBold="true"/>
-				</textElement>
-				<text><![CDATA[GRADE]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="141" y="80" width="5" height="20"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font fontName="SansSerif" size="12" isBold="true"/>
-				</textElement>
-				<text><![CDATA[:]]></text>
-			</staticText>
-			<textField isBlankWhenNull="true">
-				<reportElement x="146" y="80" width="163" height="20"/>
-				<box leftPadding="4"/>
-				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$P{grade}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="141" y="40" width="5" height="20"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font fontName="SansSerif" size="12" isBold="true"/>
-				</textElement>
-				<text><![CDATA[:]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="7" y="40" width="134" height="20"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font fontName="SansSerif" size="12" isBold="true"/>
-				</textElement>
-				<text><![CDATA[LECTURER]]></text>
-			</staticText>
-			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
-				<reportElement x="146" y="40" width="163" height="20"/>
+			<textField>
+				<reportElement x="146" y="38" width="163" height="20"/>
 				<box leftPadding="4"/>
 				<textElement verticalAlignment="Middle">
 					<font size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{lecturer_code}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="146" y="59" width="163" height="20"/>
+				<box leftPadding="4"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{att_date}]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>
@@ -210,14 +189,14 @@
 	<summary>
 		<band height="47" splitType="Stretch">
 			<staticText>
-				<reportElement x="301" y="5" width="125" height="16"/>
+				<reportElement x="298" y="5" width="117" height="16"/>
 				<textElement textAlignment="Right">
 					<font fontName="SansSerif" size="12" isBold="false"/>
 				</textElement>
 				<text><![CDATA[AMOUNT TOTAL]]></text>
 			</staticText>
 			<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-				<reportElement mode="Opaque" x="430" y="5" width="116" height="16" backcolor="#CCCCCC"/>
+				<reportElement mode="Opaque" x="423" y="5" width="123" height="16" backcolor="#CCCCCC"/>
 				<box rightPadding="4">
 					<topPen lineWidth="0.25"/>
 					<leftPen lineWidth="0.25"/>
@@ -230,14 +209,14 @@
 				<textFieldExpression><![CDATA[$V{total_fee_amount}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="301" y="22" width="125" height="16"/>
+				<reportElement x="298" y="22" width="117" height="16"/>
 				<textElement textAlignment="Right">
 					<font fontName="SansSerif" size="12" isBold="false"/>
 				</textElement>
 				<text><![CDATA[STUDENT COUNT]]></text>
 			</staticText>
 			<textField>
-				<reportElement mode="Opaque" x="430" y="22" width="116" height="16" backcolor="#CCCCCC"/>
+				<reportElement mode="Opaque" x="423" y="22" width="123" height="16" backcolor="#CCCCCC"/>
 				<box rightPadding="4">
 					<topPen lineWidth="0.25"/>
 					<leftPen lineWidth="0.25"/>
