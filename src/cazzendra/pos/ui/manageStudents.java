@@ -87,7 +87,8 @@ public class manageStudents extends javax.swing.JFrame {
                         "", txtRegNo.getText().trim(), txtContactNo.getText().trim(), txtGuardianName.getText().trim(),
                         txtGuardianContact.getText().trim(),
                         comboGender.getSelectedItem().toString(), txtCurrentAddress.getText().trim(),
-                        CommonController.getMysqlDateFromJDateChooser(calDob), comboGrade.getSelectedItem().toString());
+                        CommonController.getMysqlDateFromJDateChooser(calDob), comboGrade.getSelectedItem().toString(), 
+                        chkBoxIsInstituteStudent.isSelected());
 
                 if (status) {
                     JOptionPane.showMessageDialog(this, "Student registered successfully !");
@@ -199,6 +200,7 @@ public class manageStudents extends javax.swing.JFrame {
         jLabel17 = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
         jSeparator3 = new javax.swing.JSeparator();
+        chkBoxIsInstituteStudent = new javax.swing.JCheckBox();
         btnEdit = new javax.swing.JButton();
         btViewStudentDetails = new javax.swing.JButton();
         txtSearchAttribute = new javax.swing.JTextField();
@@ -370,6 +372,11 @@ public class manageStudents extends javax.swing.JFrame {
 
         jSeparator3.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
+        chkBoxIsInstituteStudent.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        chkBoxIsInstituteStudent.setForeground(new java.awt.Color(0, 0, 102));
+        chkBoxIsInstituteStudent.setText("    Institute Student");
+        chkBoxIsInstituteStudent.setFocusable(false);
+
         javax.swing.GroupLayout PanelSubLayout = new javax.swing.GroupLayout(PanelSub);
         PanelSub.setLayout(PanelSubLayout);
         PanelSubLayout.setHorizontalGroup(
@@ -400,12 +407,13 @@ public class manageStudents extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 9, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(PanelSubLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtGuardianName, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtGuardianContact, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btSave, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(PanelSubLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel20, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE)
+                    .addComponent(txtGuardianName, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE)
+                    .addComponent(txtGuardianContact, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE)
+                    .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE)
+                    .addComponent(btSave, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(chkBoxIsInstituteStudent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         PanelSubLayout.setVerticalGroup(
@@ -467,6 +475,8 @@ public class manageStudents extends javax.swing.JFrame {
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelSubLayout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(chkBoxIsInstituteStudent)
+                                .addGap(24, 24, 24)
                                 .addComponent(btSave))))
                     .addGroup(PanelSubLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
@@ -688,6 +698,7 @@ public class manageStudents extends javax.swing.JFrame {
     private javax.swing.JButton btViewStudentDetails;
     private javax.swing.JButton btnEdit;
     private com.toedter.calendar.JDateChooser calDob;
+    private javax.swing.JCheckBox chkBoxIsInstituteStudent;
     private javax.swing.JComboBox<String> comboGender;
     private javax.swing.JComboBox<String> comboGrade;
     private javax.swing.JLabel jLabel10;

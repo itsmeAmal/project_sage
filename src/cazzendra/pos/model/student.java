@@ -30,6 +30,7 @@ public class student {
     private Date dob;
     private String guardianName;
     private String grade;
+    private String isInstituteStudent;
 
     /**
      * @return the id
@@ -225,6 +226,20 @@ public class student {
      */
     public void setGrade(String grade) {
         this.grade = grade;
+    }
+
+    /**
+     * @return the isInstituteStudent
+     */
+    public String getIsInstituteStudent() {
+        return isInstituteStudent;
+    }
+
+    /**
+     * @param isInstituteStudent the isInstituteStudent to set
+     */
+    public void setIsInstituteStudent(String isInstituteStudent) {
+        this.isInstituteStudent = isInstituteStudent;
     }
 
     /**

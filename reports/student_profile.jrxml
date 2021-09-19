@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="student_profile" language="groovy" pageWidth="421" pageHeight="595" columnWidth="381" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
-	<property name="ireport.zoom" value="1.4641000000000013"/>
+	<property name="ireport.zoom" value="1.6105100000000014"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="139"/>
+	<property name="ireport.y" value="214"/>
 	<parameter name="student_id" class="java.lang.Integer"/>
 	<queryString>
 		<![CDATA[select * from student where student_id=$P{student_id}]]>
@@ -25,6 +25,7 @@
 	<field name="student_guardian_contact_no" class="java.lang.String"/>
 	<field name="student_dob" class="java.sql.Date"/>
 	<field name="student_grade" class="java.lang.String"/>
+	<field name="is_institute_student" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -61,7 +62,7 @@
 		<band splitType="Stretch"/>
 	</pageFooter>
 	<summary>
-		<band height="358" splitType="Stretch">
+		<band height="363" splitType="Stretch">
 			<staticText>
 				<reportElement x="89" y="7" width="74" height="20"/>
 				<textElement textAlignment="Left">
@@ -263,6 +264,27 @@
 					<font fontName="SansSerif" size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="112" y="333" width="16" height="20"/>
+				<textElement textAlignment="Left">
+					<font fontName="SansSerif" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="132" y="333" width="177" height="20"/>
+				<textElement verticalAlignment="Top">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{is_institute_student}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="17" y="333" width="95" height="20"/>
+				<textElement textAlignment="Left">
+					<font fontName="SansSerif" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Is Institute Student]]></text>
 			</staticText>
 		</band>
 	</summary>

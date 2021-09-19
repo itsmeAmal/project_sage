@@ -20,7 +20,7 @@ public class studentController {
 
     public static boolean addStudent(String name, String email1, String email2,
             String regNo, String contactNo, String detail,
-            String guardianContactNo, String gender, String currentAddress, Date dob, String grade) throws SQLException {
+            String guardianContactNo, String gender, String currentAddress, Date dob, String grade, boolean isInstStudent) throws SQLException {
         student student = new student();
         student.setName(name);
         student.setEmail1(email1);
@@ -34,6 +34,7 @@ public class studentController {
         student.setStatus(student.ACTIVE_STUDENT);
         student.setDob(dob);
         student.setGrade(grade);
+        student.setIsInstituteStudent((isInstStudent ? "Y" : "N"));
         return new studentDaoImpl().addStudent(student);
     }
 
@@ -79,6 +80,7 @@ public class studentController {
             student.setDob(rset.getDate("student_dob"));
             student.setGuardianName(rset.getString("student_guardian_name"));
             student.setGrade(rset.getString("student_grade"));
+            student.setIsInstituteStudent(rset.getString("is_institute_student"));
         }
         return student;
     }
