@@ -8,7 +8,7 @@
 	<parameter name="lec_code" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[select * from student where student_grade=$P{grade} and student_id not in (select student_code
-from attendance_v3 where att_date=$P{class_date} and lec_code=$P{lec_code})]]>
+from attendance_v3 where att_date=$P{class_date} and lec_code=$P{lec_code}) and is_institute_student='Y']]>
 	</queryString>
 	<field name="student_id" class="java.lang.Long"/>
 	<field name="student_name" class="java.lang.String"/>
@@ -28,6 +28,7 @@ from attendance_v3 where att_date=$P{class_date} and lec_code=$P{lec_code})]]>
 	<field name="student_guardian_contact_no" class="java.lang.String"/>
 	<field name="student_dob" class="java.sql.Date"/>
 	<field name="student_grade" class="java.lang.String"/>
+	<field name="is_institute_student" class="java.lang.String"/>
 	<variable name="student_count" class="java.lang.Integer" calculation="Count">
 		<variableExpression><![CDATA[$F{student_id}]]></variableExpression>
 	</variable>
