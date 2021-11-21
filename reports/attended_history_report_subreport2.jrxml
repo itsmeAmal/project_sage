@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="attended_history_report_subreport2" language="groovy" pageWidth="360" pageHeight="144" orientation="Landscape" columnWidth="360" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="1.771561000000001"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT *  FROM attendance_v3]]>
+	</queryString>
+	<field name="id" class="java.lang.Long"/>
+	<field name="lec_code" class="java.lang.String"/>
+	<field name="student_code" class="java.lang.String"/>
+	<field name="att_date" class="java.sql.Date"/>
+	<field name="date_time" class="java.sql.Timestamp"/>
+	<field name="fee" class="java.math.BigDecimal"/>
+	<field name="remark" class="java.lang.String"/>
+	<field name="status" class="java.lang.String"/>
+	<field name="lecturer_name" class="java.lang.String"/>
+	<field name="student_name" class="java.lang.String"/>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="222" y="41" width="81" height="20"/>
+				<textElement/>
+				<text><![CDATA[June]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="41" width="85" height="20"/>
+				<textElement/>
+				<text><![CDATA[Student Code]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="95" y="41" width="94" height="20"/>
+				<textElement/>
+				<text><![CDATA[lec_code]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<textField>
+				<reportElement x="10" y="0" width="85" height="19"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{student_code}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="222" y="0" width="81" height="19"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{att_date}.getMonth()==6 ? $F{att_date} : ""]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="10" y="19" width="293" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement x="95" y="0" width="94" height="19"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{lec_code}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

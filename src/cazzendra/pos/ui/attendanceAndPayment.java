@@ -175,9 +175,10 @@ public class attendanceAndPayment extends javax.swing.JFrame {
         BigDecimal feeTotal = BigDecimal.ZERO;
         DefaultTableModel dtm = (DefaultTableModel) tblAttendanceV3.getModel();
         for (int i = 0; i < dtm.getRowCount(); i++) {
-            BigDecimal lineTotal = Validations.getBigDecimalOrZeroFromString(dtm.getValueAt(i, 6).toString());
+            BigDecimal lineTotal = Validations.getBigDecimalOrZeroFromString(dtm.getValueAt(i, 7).toString());
             feeTotal = feeTotal.add(lineTotal);
         }
+        System.out.println("Fee Total " + Validations.formatWithTwoDigits(feeTotal.toString()));
         txtFeeTotal.setText(Validations.formatWithTwoDigits(feeTotal.toString()));
     }
 
@@ -235,6 +236,7 @@ public class attendanceAndPayment extends javax.swing.JFrame {
         try {
             ResultSet rset = lecturerController.getAllLecturers();
             CommonController.loadDataToComboBox(comboLecturerCodes3, rset, "lecturer_prefix_code");
+            comboLecturerCodes3.addItem("All");
         } catch (SQLException ex) {
             Logger.getLogger(attendanceAndPayment.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -574,6 +576,11 @@ public class attendanceAndPayment extends javax.swing.JFrame {
 
         comboLecturerCodes3.setFont(new java.awt.Font("Ubuntu Medium", 0, 18)); // NOI18N
         comboLecturerCodes3.setForeground(new java.awt.Color(0, 0, 102));
+        comboLecturerCodes3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboLecturerCodes3ActionPerformed(evt);
+            }
+        });
 
         jButton3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jButton3.setText("<html><center>Day Fee Commission Report</center></html>");
@@ -688,7 +695,7 @@ public class attendanceAndPayment extends javax.swing.JFrame {
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(comboLecturerCodesAttendanceReport, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(comboGradeAttendedReport, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -857,13 +864,16 @@ public class attendanceAndPayment extends javax.swing.JFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(6, 6, 6)
-                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(6, 6, 6)
+                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(13, 13, 13))
         );
 
         PanelMain.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 440, 980, 270));
@@ -1000,7 +1010,11 @@ public class attendanceAndPayment extends javax.swing.JFrame {
                 hm.put("class_date", Validations.getSqlDateByUtilDate(dateChooserFromDate3.getDate()));
                 hm.put("lecturer_code", comboLecturerCodes3.getSelectedItem().toString());
                 hm.put("commission_rate", Validations.getBigDecimalOrZeroFromString(txtCommissionRate3.getText().trim()));
-                CommonController.printCommonReport("lecturer_comission_report", hm);
+                if (comboLecturerCodes3.getSelectedItem().toString().equalsIgnoreCase("All")) {
+                    CommonController.printCommonReport("lecturer_comission_report_all", hm);
+                } else {
+                    CommonController.printCommonReport("lecturer_comission_report", hm);
+                }
             } catch (SQLException | JRException ex) {
                 Logger.getLogger(attendanceAndPayment.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -1055,6 +1069,10 @@ public class attendanceAndPayment extends javax.swing.JFrame {
     private void comboLecturerCodesAttendanceReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboLecturerCodesAttendanceReportActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_comboLecturerCodesAttendanceReportActionPerformed
+
+    private void comboLecturerCodes3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboLecturerCodes3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comboLecturerCodes3ActionPerformed
 
     /**
      * @param args the command line arguments
